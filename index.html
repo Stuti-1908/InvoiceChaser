@@ -798,14 +798,16 @@ btns.forEach(b=>b.addEventListener('click',()=>play(b.dataset.s)));play('promise
 (()=>{
  const CALL={
   en:{dir:'ltr',lang:'en-US',audio:'audio/call-en.mp3',outcome:'Promised Thursday',lines:[
-   ['bot','Hi Khalid! This is Sara, the automated assistant from Al Noor Trading. Just a quick, friendly reminder about invoice 2033, for 42,750 dirhams. It was due on the first. Is everything okay with it?'],
-   ['cust','Oh yes, thanks for the reminder. Noted, we\'ll send it by Thursday.'],
-   ['bot','Perfect, thank you Khalid! I\'ve noted Thursday, and I\'ll send you the payment link on WhatsApp now. Have a great day!'],
+   ['bot','Hi Khalid! Sara here, from Al Noor Trading.'],
+   ['bot','Just a quick reminder, invoice 2033 is now due. Is everything okay with it?'],
+   ['cust','Oh yes, thanks! Noted. We\'ll send it by Thursday.'],
+   ['bot','Perfect! I\'ll note Thursday and send the payment link on WhatsApp. Have a great day!'],
    ['cust','You too, bye!']]},
   ar:{dir:'rtl',lang:'ar-SA',audio:'audio/call-ar.mp3',outcome:'وعد بالدفع يوم الخميس',lines:[
-   ['bot','مرحباً خالد! معك سارة، المساعدة الآلية من شركة النور للتجارة. حبيت أذكّرك بشكل ودّي بالفاتورة رقم ٢٠٣٣ بقيمة ٤٢٬٧٥٠ درهم، كانت مستحقة يوم واحد بالشهر. كل شي تمام؟'],
-   ['cust','أهلاً، شكراً على التذكير. تمام، بنحوّل المبلغ يوم الخميس إن شاء الله.'],
-   ['bot','ممتاز، شكراً خالد! سجّلت يوم الخميس، وبرسل لك رابط الدفع على الواتساب الحين. يومك سعيد!'],
+   ['bot','مرحباً خالد! معك سارة من شركة النور للتجارة.'],
+   ['bot','بس تذكير سريع، الفاتورة ٢٠٣٣ صارت مستحقة. كل شي تمام؟'],
+   ['cust','أهلاً، شكراً! تمام، بنحوّلها يوم الخميس.'],
+   ['bot','ممتاز! سجّلت الخميس، وبرسل لك رابط الدفع على الواتساب. يومك سعيد!'],
    ['cust','وأنت كمان، مع السلامة!']]}
  };
  const btn=document.getElementById('playCall'),wave=document.getElementById('wave'),note=document.getElementById('voiceNote'),
@@ -827,12 +829,12 @@ btns.forEach(b=>b.addEventListener('click',()=>play(b.dataset.s)));play('promise
  const waitVoices=()=>new Promise(r=>{if(speechSynthesis.getVoices().length)return r();speechSynthesis.onvoiceschanged=()=>r();setTimeout(r,1200)});
  async function speak(){
   const c=CALL[cur];await waitVoices();
-  if(!voicesFor(c.lang).length){note.textContent=cur==='ar'?'No Arabic voice is available in this browser. Open the page in Chrome or Edge to hear the Arabic call.':'No English voice is available in this browser.';stop();return}
+  if(!voicesFor(c.lang).length){note.textContent=cur==='ar'?'This browser has no Arabic voice (Chrome does not include one). Open the page in Microsoft Edge to hear the Arabic call, or add a recording in audio/call-ar.mp3.':'No English voice is available in this browser.';stop();return}
   note.textContent='Fictional call. Plays with your browser\'s voices.';
   let i=0;const next=()=>{els.forEach(e=>e.classList.remove('speaking'));if(!playing)return;if(i>=c.lines.length){stop();return}
    const [who,t]=c.lines[i];const el=els[i++];const u=new SpeechSynthesisUtterance(t);u.lang=c.lang;const v=pick(c.lang,who);if(v)u.voice=v;
-   u.rate=who==='bot'?1.08:1.12;u.pitch=who==='bot'?1.15:0.95;u.volume=1;el.classList.add('speaking');
-   u.onend=()=>setTimeout(next,280);u.onerror=next;speechSynthesis.speak(u)};
+   u.rate=who==='bot'?1.22:1.28;u.pitch=who==='bot'?1.04:0.96;u.volume=1;el.classList.add('speaking');
+   const sameNext=c.lines[i]&&c.lines[i][0]===who;u.onend=()=>setTimeout(next,sameNext?40:150);u.onerror=next;speechSynthesis.speak(u)};
   next();
  }
  btn.addEventListener('click',()=>{if(playing){stop();return}playing=true;btn.textContent='Stop';wave.classList.add('on');
