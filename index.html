@@ -176,8 +176,12 @@ h3{font-size:clamp(21px,2vw,26px);line-height:1.15;font-weight:700}
 /* panel: call */
 .call{display:flex;flex-direction:column;gap:12px}
 .call-top{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:15px}
+.play{font:600 13px var(--body);background:var(--emerald);color:#fff;border:0;border-radius:999px;padding:7px 14px;cursor:pointer;margin-left:auto;margin-right:12px}
+.play:hover{background:var(--emerald-2)}
+.line.speaking{outline:2px solid var(--emerald);outline-offset:2px}
 .wave{display:flex;gap:3px;align-items:center;height:28px}
 .wave i{width:3px;border-radius:2px;background:var(--emerald);height:40%}
+.wave i{animation-play-state:paused}.wave.on i{animation-play-state:running}
 @media (prefers-reduced-motion:no-preference){.wave i{animation:w 1s infinite ease-in-out}.wave i:nth-child(2n){animation-delay:.2s}.wave i:nth-child(3n){animation-delay:.4s}@keyframes w{50%{height:100%}}}
 .line{padding:10px 12px;border-radius:10px;font-size:14px;line-height:1.5}
 .line.bot{background:#F0F4F3}
@@ -460,11 +464,12 @@ footer{padding-block:56px 40px}
           </ul>
         </div>
         <div class="panel call" aria-label="Example call transcript, fictional">
-          <div class="call-top"><span>Call · Marina Facilities LLC</span><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-          <p class="line bot ar">السلام عليكم، معك المساعد الآلي من شركة النور للتجارة بخصوص الفاتورة رقم 2033.</p>
-          <p class="line cust">Yes, we received it. Finance will release it next Tuesday.</p>
-          <p class="line bot">Thank you. I'll note Tuesday the 14th and send the payment link on WhatsApp.</p>
+          <div class="call-top"><span>Call · Marina Facilities LLC</span><button type="button" class="play" id="playCall" aria-label="Play the sample call with voice">Play call</button><span class="wave" id="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+          <p class="line bot ar" data-lang="ar-SA" data-who="bot">السلام عليكم، معك المساعد الآلي من شركة النور للتجارة بخصوص الفاتورة رقم 2033.</p>
+          <p class="line cust" data-lang="en-GB" data-who="cust">Yes, we received it. Finance will release it next Tuesday.</p>
+          <p class="line bot" data-lang="en-US" data-who="bot">Thank you. I'll note Tuesday the 14th and send the payment link on WhatsApp.</p>
           <div class="outcome"><span class="st st-prom">Promised 14 Oct</span><span class="small">Summary saved · link sent</span></div>
+          <p class="small" id="voiceNote">Sample call with browser voices. Sound quality depends on your device.</p>
         </div>
       </div>
 
@@ -693,7 +698,7 @@ footer{padding-block:56px 40px}
         <p class="val" id="mail">sng19.work@gmail.com</p>
         <button class="copy" id="copy" type="button">Copy email</button>
         <label>WhatsApp</label>
-        <p class="val">[Add your number]</p>
+        <p class="val">+91 63550 46464</p>
         <p class="small" style="color:#A9C0BC">Please don't send customer data until we've agreed how it will be handled.</p>
       </div>
     </div>
@@ -747,6 +752,24 @@ function play(k){clearInterval(timer);btns.forEach(b=>b.setAttribute('aria-press
  state.textContent=e.s[0];state.className='st '+e.s[1];if(i>=sc.e.length){clearInterval(timer);note.textContent=sc.n}};
  if(reduce){while(i<sc.e.length)step();return}step();timer=setInterval(step,650)}
 btns.forEach(b=>b.addEventListener('click',()=>play(b.dataset.s)));play('promise');
+
+// voice playback for sample call (Web Speech API)
+(()=>{const btn=document.getElementById('playCall'),wave=document.getElementById('wave'),note=document.getElementById('voiceNote');
+ if(!btn)return; if(!('speechSynthesis' in window)){btn.disabled=true;note.textContent='Voice playback is not supported in this browser.';return}
+ const lines=[...document.querySelectorAll('.call .line[data-lang]')];let playing=false;
+ const pick=(lang,who)=>{const vs=speechSynthesis.getVoices();const base=lang.split('-')[0];
+  const m=vs.filter(v=>v.lang&&v.lang.toLowerCase().startsWith(base));
+  if(!m.length)return null; if(who==='cust')return m.find(v=>/male|daniel|george|ryan|arthur/i.test(v.name))||m[m.length-1];
+  return m.find(v=>v.lang===lang)||m.find(v=>/female|samantha|zira|hoda|salma|google/i.test(v.name))||m[0]};
+ const stop=()=>{speechSynthesis.cancel();playing=false;wave.classList.remove('on');lines.forEach(l=>l.classList.remove('speaking'));btn.textContent='Play call'};
+ btn.addEventListener('click',()=>{if(playing){stop();return}playing=true;btn.textContent='Stop';wave.classList.add('on');let i=0,missing=false;
+  const next=()=>{lines.forEach(l=>l.classList.remove('speaking'));if(!playing)return;if(i>=lines.length){stop();if(missing)note.textContent='Your device has no Arabic voice installed, so the Arabic line was skipped.';return}
+   const el=lines[i++];const v=pick(el.dataset.lang,el.dataset.who);
+   if(!v&&el.dataset.lang.startsWith('ar')){missing=true;next();return}
+   const u=new SpeechSynthesisUtterance(el.textContent);u.lang=el.dataset.lang;if(v)u.voice=v;u.rate=el.dataset.who==='bot'?0.95:1.02;u.pitch=el.dataset.who==='bot'?1.05:0.9;
+   el.classList.add('speaking');u.onend=next;u.onerror=next;speechSynthesis.speak(u)};
+  if(!speechSynthesis.getVoices().length){speechSynthesis.onvoiceschanged=()=>{speechSynthesis.onvoiceschanged=null;next()};setTimeout(()=>{if(i===0)next()},600)}else next()});
+})();
 </script>
 </body>
 </html>
