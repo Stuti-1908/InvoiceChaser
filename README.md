@@ -2,7 +2,7 @@
 
 Marketing site for InvoiceChaser: collections for UAE businesses on WhatsApp, email and phone, in Arabic and English.
 
-Plain HTML, CSS and JavaScript. No build step.
+A single self-contained `index.html` (styles and script inline). No build step.
 
 ## Run locally
 
