@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>InvoiceChaser call recorder</title>
+<style>
+body{font:16px/1.6 "Segoe UI",system-ui,sans-serif;background:#F6F8F7;color:#0C2328;margin:0;padding:32px 18px}
+main{max-width:720px;margin:auto;display:flex;flex-direction:column;gap:18px}
+h1{font-size:28px;margin:0} ol{margin:0;padding-left:20px} li{margin:6px 0}
+.card{background:#fff;border:1px solid #DCE4E2;border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px}
+button{font:600 15px inherit;background:#0B8A6B;color:#fff;border:0;border-radius:999px;padding:11px 20px;cursor:pointer;align-self:flex-start}
+button:disabled{opacity:.5;cursor:default} label{font-weight:600} select{font:inherit;padding:6px;max-width:100%}
+.status{color:#56696D} a.dl{font-weight:600;color:#0B8A6B}
+</style></head><body><main>
+<h1>Record the website call</h1>
+<p>Use this page in <b>Microsoft Edge</b> to turn the sample call into audio files the website can play in every browser.</p>
+<ol>
+<li>Pick a voice for Sara and for Khalid in each language (names with "Online (Natural)" sound best).</li>
+<li>Press <b>Record</b>. When Edge asks what to share, choose <b>This tab</b> and turn on <b>Also share tab audio</b>.</li>
+<li>The call plays and records. When it finishes, click the download link.</li>
+<li>Rename the files <code>call-en.webm</code> and <code>call-ar.webm</code> and put them in the website's <code>audio/</code> folder.</li>
+</ol>
+<div class="card" id="en"><h2 style="margin:0">English</h2>
+<label>Sara <select class="vb"></select></label><label>Khalid <select class="vc"></select></label>
+<button class="rec">Record English</button><p class="status"></p></div>
+<div class="card" id="ar"><h2 style="margin:0">Arabic</h2>
+<label>Sara <select class="vb"></select></label><label>Khalid <select class="vc"></select></label>
+<button class="rec">Record Arabic</button><p class="status"></p></div>
+</main>
+<script>
+ const CALL={
+  en:{dir:'ltr',lang:'en-US',audio:'audio/call-en.mp3',outcome:'Promised Thursday',lines:[
+   ['bot','Hi Khalid! Sara here, from Al Noor Trading.'],
+   ['bot','Just a quick reminder, invoice 2033 is now due. Is everything okay with it?'],
+   ['cust','Oh yes, thanks! Noted. We\'ll send it by Thursday.'],
+   ['bot','Perfect! I\'ll note Thursday and send the payment link on WhatsApp. Have a great day!'],
+   ['cust','You too, bye!']]},
+  ar:{dir:'rtl',lang:'ar-SA',audio:'audio/call-ar.mp3',outcome:'وعد بالدفع يوم الخميس',lines:[
+   ['bot','مرحباً خالد! معك سارة من شركة النور للتجارة.'],
+   ['bot','بس تذكير سريع، الفاتورة ٢٠٣٣ صارت مستحقة. كل شي تمام؟'],
+   ['cust','أهلاً، شكراً! تمام، بنحوّلها يوم الخميس.'],
+   ['bot','ممتاز! سجّلت الخميس، وبرسل لك رابط الدفع على الواتساب. يومك سعيد!'],
+   ['cust','وأنت كمان، مع السلامة!']]}
+ };
+const RATE={bot:1.22,cust:1.28},PITCH={bot:1.04,cust:0.96};
+function fill(){const vs=speechSynthesis.getVoices();for(const k of ['en','ar']){const base=k;const card=document.getElementById(k);
+ const list=vs.filter(v=>v.lang.toLowerCase().startsWith(base)).sort((a,b)=>(/natural|online/i.test(b.name))-(/natural|online/i.test(a.name)));
+ for(const [sel,pref] of [[card.querySelector('.vb'),/female|ava|aria|jenny|emma|zariyah|amany|salma|hoda/i],[card.querySelector('.vc'),/male|andrew|brian|guy|hamed|shakir|naayf/i]]){
+  sel.innerHTML='';list.forEach((v,i)=>sel.add(new Option(v.name,i)));const j=list.findIndex(v=>pref.test(v.name)&&!(sel.classList.contains('vc')&&/female/i.test(v.name)));if(j>=0)sel.value=j;sel._list=list}
+ card.querySelector('.status').textContent=list.length?'':'No '+(k==='ar'?'Arabic':'English')+' voice in this browser. Use Microsoft Edge.'}}
+speechSynthesis.onvoiceschanged=fill;fill();
+async function record(k){const card=document.getElementById(k),st=card.querySelector('.status'),btn=card.querySelector('.rec');
+ const vb=card.querySelector('.vb'),vc=card.querySelector('.vc');const voice={bot:vb._list[vb.value],cust:vc._list[vc.value]};
+ if(!voice.bot){st.textContent='Pick a voice first.';return}
+ let stream;try{stream=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true,preferCurrentTab:true})}catch(e){st.textContent='Sharing was cancelled.';return}
+ const at=stream.getAudioTracks();if(!at.length){st.textContent='No tab audio was shared. Try again and turn on "Also share tab audio".';stream.getTracks().forEach(t=>t.stop());return}
+ const mr=new MediaRecorder(new MediaStream(at),{mimeType:'audio/webm'});const chunks=[];mr.ondataavailable=e=>chunks.push(e.data);
+ mr.onstop=()=>{stream.getTracks().forEach(t=>t.stop());const url=URL.createObjectURL(new Blob(chunks,{type:'audio/webm'}));
+  st.innerHTML='Done. <a class="dl" href="'+url+'" download="call-'+k+'.webm">Download call-'+k+'.webm</a>';btn.disabled=false};
+ btn.disabled=true;st.textContent='Recording…';mr.start();await new Promise(r=>setTimeout(r,500));
+ const c=CALL[k];for(let i=0;i<c.lines.length;i++){const [who,t]=c.lines[i];await new Promise(r=>{const u=new SpeechSynthesisUtterance(t);u.voice=voice[who]||voice.bot;u.lang=c.lang;u.rate=RATE[who];u.pitch=PITCH[who];u.onend=r;u.onerror=r;speechSynthesis.speak(u)});
+  const same=c.lines[i+1]&&c.lines[i+1][0]===who;await new Promise(r=>setTimeout(r,same?40:150))}
+ await new Promise(r=>setTimeout(r,400));mr.stop()}
+document.querySelectorAll('.rec').forEach(b=>b.addEventListener('click',()=>record(b.closest('.card').id)));
+</script></body></html>

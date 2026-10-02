@@ -838,9 +838,11 @@ btns.forEach(b=>b.addEventListener('click',()=>play(b.dataset.s)));play('promise
   next();
  }
  btn.addEventListener('click',()=>{if(playing){stop();return}playing=true;btn.textContent='Stop';wave.classList.add('on');
-  const c=CALL[cur];audio.src=c.audio;
-  audio.play().then(()=>{note.textContent='Fictional call, recorded voices.';audio.onended=stop}).catch(()=>{
-   if('speechSynthesis' in window)speak();else{note.textContent='Voice playback is not supported in this browser.';stop()}});
+  const c=CALL[cur];const srcs=[c.audio,c.audio.replace('.mp3','.webm')];
+  const tryPlay=(k)=>{if(k>=srcs.length){if('speechSynthesis' in window)speak();else{note.textContent='Voice playback is not supported in this browser.';stop()}return}
+   audio.src=srcs[k];audio.play().then(()=>{note.textContent='Fictional call, recorded voices.';audio.onended=stop;
+    const n=c.lines.length;audio.ontimeupdate=()=>{if(!audio.duration)return;const idx=Math.min(n-1,Math.floor(audio.currentTime/audio.duration*n));els.forEach((e,j)=>e.classList.toggle('speaking',j===idx))}}).catch(()=>tryPlay(k+1))};
+  tryPlay(0);
  });
  render();
 })();
