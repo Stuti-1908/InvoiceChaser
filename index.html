@@ -178,7 +178,14 @@ h3{font-size:clamp(21px,2vw,26px);line-height:1.15;font-weight:700}
 /* panel: call */
 .call{display:flex;flex-direction:column;gap:12px}
 .call-top{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:15px}
-.play{font:600 13px var(--body);background:var(--emerald);color:#fff;border:0;border-radius:999px;padding:7px 14px;cursor:pointer;margin-left:auto;margin-right:12px}
+.call-ctrl{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.play{font:600 14px var(--body);background:var(--emerald);color:#fff;border:0;border-radius:999px;padding:9px 18px;cursor:pointer}
+.lang{display:inline-flex;background:#EEF2F1;border-radius:999px;padding:3px}
+.lang button{font:600 13px var(--body);border:0;background:transparent;color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer}
+.lang button[data-lang=ar]{font-family:var(--arabic)}
+.lang button[aria-pressed=true]{background:var(--white);color:var(--ink);box-shadow:0 1px 3px rgba(12,35,40,.15)}
+.script{display:flex;flex-direction:column;gap:10px}
+.script[dir=rtl] .line.cust{align-self:flex-start}
 .play:hover{background:var(--emerald-2)}
 .line.speaking{outline:2px solid var(--emerald);outline-offset:2px}
 .wave{display:flex;gap:3px;align-items:center;height:28px}
@@ -471,20 +478,26 @@ footer{padding-block:56px 40px}
       <div class="feature flip">
         <div class="feature-copy">
           <h3>Phone calls in Arabic and English</h3>
-          <p class="lead">When a message isn't enough, an assistant calls. It says who it is, confirms the invoice arrived and asks when payment is planned. Every call is recorded and summarised.</p>
+          <p class="lead">When a message isn't enough, a friendly assistant calls. It says who it is, gives a polite reminder and asks when payment is planned. Every call is recorded and summarised.</p>
           <ul>
             <li><span class="tick"></span><span>Introduces itself as an automated assistant on every call</span></li>
             <li><span class="tick"></span><span>Calls only during business hours, never at prayer times</span></li>
             <li><span class="tick"></span><span>Writes the promised date straight onto the invoice</span></li>
           </ul>
         </div>
-        <div class="panel call" aria-label="Example call transcript, fictional">
-          <div class="call-top"><span>Call · Marina Facilities LLC</span><button type="button" class="play" id="playCall" aria-label="Play the sample call with voice">Play call</button><span class="wave" id="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-          <p class="line bot ar" data-lang="ar-SA" data-who="bot">السلام عليكم، معك المساعد الآلي من شركة النور للتجارة بخصوص الفاتورة رقم 2033.</p>
-          <p class="line cust" data-lang="en-GB" data-who="cust">Yes, we received it. Finance will release it next Tuesday.</p>
-          <p class="line bot" data-lang="en-US" data-who="bot">Thank you. I'll note Tuesday the 14th and send the payment link on WhatsApp.</p>
-          <div class="outcome"><span class="st st-prom">Promised 14 Oct</span><span class="small">Summary saved · link sent</span></div>
-          <p class="small" id="voiceNote">Sample call with browser voices. Sound quality depends on your device.</p>
+        <div class="panel call" aria-label="Example reminder call, fictional">
+          <div class="call-top"><span>Call · Marina Facilities LLC</span><span class="wave" id="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+          <div class="call-ctrl">
+            <button type="button" class="play" id="playCall">Play call</button>
+            <div class="lang" role="group" aria-label="Call language">
+              <button type="button" data-lang="en" aria-pressed="true">English</button>
+              <button type="button" data-lang="ar" aria-pressed="false">العربية</button>
+            </div>
+          </div>
+          <div class="script" id="script" aria-live="polite"></div>
+          <div class="outcome"><span class="st st-prom" id="callOutcome">Promised Thursday</span><span class="small">Summary saved, payment link sent on WhatsApp</span></div>
+          <p class="small" id="voiceNote">Fictional call. Plays with your browser's voices.</p>
+          <audio id="callAudio" preload="none"></audio>
         </div>
       </div>
 
@@ -781,22 +794,53 @@ function play(k){clearInterval(timer);btns.forEach(b=>b.setAttribute('aria-press
  if(reduce){while(i<sc.e.length)step();return}step();timer=setInterval(step,650)}
 btns.forEach(b=>b.addEventListener('click',()=>play(b.dataset.s)));play('promise');
 
-// voice playback for sample call (Web Speech API)
-(()=>{const btn=document.getElementById('playCall'),wave=document.getElementById('wave'),note=document.getElementById('voiceNote');
- if(!btn)return; if(!('speechSynthesis' in window)){btn.disabled=true;note.textContent='Voice playback is not supported in this browser.';return}
- const lines=[...document.querySelectorAll('.call .line[data-lang]')];let playing=false;
- const pick=(lang,who)=>{const vs=speechSynthesis.getVoices();const base=lang.split('-')[0];
-  const m=vs.filter(v=>v.lang&&v.lang.toLowerCase().startsWith(base));
-  if(!m.length)return null; if(who==='cust')return m.find(v=>/male|daniel|george|ryan|arthur/i.test(v.name))||m[m.length-1];
-  return m.find(v=>v.lang===lang)||m.find(v=>/female|samantha|zira|hoda|salma|google/i.test(v.name))||m[0]};
- const stop=()=>{speechSynthesis.cancel();playing=false;wave.classList.remove('on');lines.forEach(l=>l.classList.remove('speaking'));btn.textContent='Play call'};
- btn.addEventListener('click',()=>{if(playing){stop();return}playing=true;btn.textContent='Stop';wave.classList.add('on');let i=0,missing=false;
-  const next=()=>{lines.forEach(l=>l.classList.remove('speaking'));if(!playing)return;if(i>=lines.length){stop();if(missing)note.textContent='Your device has no Arabic voice installed, so the Arabic line was skipped.';return}
-   const el=lines[i++];const v=pick(el.dataset.lang,el.dataset.who);
-   if(!v&&el.dataset.lang.startsWith('ar')){missing=true;next();return}
-   const u=new SpeechSynthesisUtterance(el.textContent);u.lang=el.dataset.lang;if(v)u.voice=v;u.rate=el.dataset.who==='bot'?0.95:1.02;u.pitch=el.dataset.who==='bot'?1.05:0.9;
-   el.classList.add('speaking');u.onend=next;u.onerror=next;speechSynthesis.speak(u)};
-  if(!speechSynthesis.getVoices().length){speechSynthesis.onvoiceschanged=()=>{speechSynthesis.onvoiceschanged=null;next()};setTimeout(()=>{if(i===0)next()},600)}else next()});
+// Reminder call: English / Arabic, recorded audio if present, else best browser voices
+(()=>{
+ const CALL={
+  en:{dir:'ltr',lang:'en-US',audio:'audio/call-en.mp3',outcome:'Promised Thursday',lines:[
+   ['bot','Hi Khalid! This is Sara, the automated assistant from Al Noor Trading. Just a quick, friendly reminder about invoice 2033, for 42,750 dirhams. It was due on the first. Is everything okay with it?'],
+   ['cust','Oh yes, thanks for the reminder. Noted, we\'ll send it by Thursday.'],
+   ['bot','Perfect, thank you Khalid! I\'ve noted Thursday, and I\'ll send you the payment link on WhatsApp now. Have a great day!'],
+   ['cust','You too, bye!']]},
+  ar:{dir:'rtl',lang:'ar-SA',audio:'audio/call-ar.mp3',outcome:'وعد بالدفع يوم الخميس',lines:[
+   ['bot','مرحباً خالد! معك سارة، المساعدة الآلية من شركة النور للتجارة. حبيت أذكّرك بشكل ودّي بالفاتورة رقم ٢٠٣٣ بقيمة ٤٢٬٧٥٠ درهم، كانت مستحقة يوم واحد بالشهر. كل شي تمام؟'],
+   ['cust','أهلاً، شكراً على التذكير. تمام، بنحوّل المبلغ يوم الخميس إن شاء الله.'],
+   ['bot','ممتاز، شكراً خالد! سجّلت يوم الخميس، وبرسل لك رابط الدفع على الواتساب الحين. يومك سعيد!'],
+   ['cust','وأنت كمان، مع السلامة!']]}
+ };
+ const btn=document.getElementById('playCall'),wave=document.getElementById('wave'),note=document.getElementById('voiceNote'),
+  box=document.getElementById('script'),out=document.getElementById('callOutcome'),audio=document.getElementById('callAudio'),
+  langBtns=document.querySelectorAll('.lang button');
+ let cur='en',playing=false,els=[];
+ const render=()=>{const c=CALL[cur];box.innerHTML='';box.dir=c.dir;
+  els=c.lines.map(([who,t])=>{const p=document.createElement('p');p.className='line '+(who==='bot'?'bot':'cust')+(cur==='ar'?' ar':'');p.textContent=t;box.appendChild(p);return p});
+  out.textContent=c.outcome;};
+ const stop=()=>{playing=false;try{speechSynthesis.cancel()}catch{};audio.pause();wave.classList.remove('on');els.forEach(e=>e.classList.remove('speaking'));btn.textContent='Play call'};
+ langBtns.forEach(b=>b.addEventListener('click',()=>{stop();cur=b.dataset.lang;langBtns.forEach(x=>x.setAttribute('aria-pressed',x===b));render()}));
+ // rank voices: natural / online neural voices first
+ const score=v=>(/natural|neural|online|google|premium|enhanced/i.test(v.name)?10:0)+(v.localService?0:3);
+ const voicesFor=(lang)=>{const base=lang.slice(0,2);return (speechSynthesis.getVoices()||[]).filter(v=>v.lang&&v.lang.toLowerCase().startsWith(base)).sort((a,b)=>score(b)-score(a))};
+ const pick=(lang,who)=>{const vs=voicesFor(lang);if(!vs.length)return null;
+  const fem=vs.find(v=>/female|sara|aria|jenny|ava|emma|zariyah|hoda|salma|amany|samantha|zira|google/i.test(v.name));
+  const male=vs.find(v=>/male|guy|andrew|brian|davis|hamed|naayf|shakir|daniel|george|david|mark/i.test(v.name)&&!/female/i.test(v.name));
+  return who==='bot'?(fem||vs[0]):(male||vs[1]||vs[0])};
+ const waitVoices=()=>new Promise(r=>{if(speechSynthesis.getVoices().length)return r();speechSynthesis.onvoiceschanged=()=>r();setTimeout(r,1200)});
+ async function speak(){
+  const c=CALL[cur];await waitVoices();
+  if(!voicesFor(c.lang).length){note.textContent=cur==='ar'?'No Arabic voice is available in this browser. Open the page in Chrome or Edge to hear the Arabic call.':'No English voice is available in this browser.';stop();return}
+  note.textContent='Fictional call. Plays with your browser\'s voices.';
+  let i=0;const next=()=>{els.forEach(e=>e.classList.remove('speaking'));if(!playing)return;if(i>=c.lines.length){stop();return}
+   const [who,t]=c.lines[i];const el=els[i++];const u=new SpeechSynthesisUtterance(t);u.lang=c.lang;const v=pick(c.lang,who);if(v)u.voice=v;
+   u.rate=who==='bot'?1.08:1.12;u.pitch=who==='bot'?1.15:0.95;u.volume=1;el.classList.add('speaking');
+   u.onend=()=>setTimeout(next,280);u.onerror=next;speechSynthesis.speak(u)};
+  next();
+ }
+ btn.addEventListener('click',()=>{if(playing){stop();return}playing=true;btn.textContent='Stop';wave.classList.add('on');
+  const c=CALL[cur];audio.src=c.audio;
+  audio.play().then(()=>{note.textContent='Fictional call, recorded voices.';audio.onended=stop}).catch(()=>{
+   if('speechSynthesis' in window)speak();else{note.textContent='Voice playback is not supported in this browser.';stop()}});
+ });
+ render();
 })();
 </script>
 </body>
