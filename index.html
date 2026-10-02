@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InvoiceChaser — Get paid faster, without the chasing</title>
+<meta name="description" content="InvoiceChaser chases unpaid invoices for UAE businesses on WhatsApp, email and phone, in Arabic and English, and stops the moment a customer pays. Built for UAE e-invoicing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav" id="top">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="InvoiceChaser home">
+      <span class="brand-mark" aria-hidden="true">IC</span>InvoiceChaser
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menu</button>
+    <nav id="nav-links" class="nav-links">
+      <a href="#problem">Why it matters</a>
+      <a href="#how">How it works</a>
+      <a href="#demo">Demo</a>
+      <a href="#platform">Platform</a>
+      <a href="#trust">Trust</a>
+      <a href="#partners">Partners</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-small" href="#contact">Book a pilot</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Collections for UAE businesses</p>
+      <h1>Get paid faster, without the chasing.</h1>
+      <p class="lede">InvoiceChaser reminds your customers about unpaid invoices on WhatsApp, email and phone, in Arabic and English. It stops the moment they pay, and hands anything difficult to your own team.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#contact">Get a free unpaid-invoice check</a>
+        <a class="btn btn-ghost" href="#demo">See it work</a>
+      </div>
+      <p class="fine">Ready for UAE e-invoicing. You approve every message template before anything is sent.</p>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="phone">
+        <div class="phone-top"><span>Al Noor Trading</span><small>WhatsApp Business</small></div>
+        <div class="bubble out">Hi Omar, a friendly reminder that invoice <b>INV-2041</b> for <b>AED 18,400</b> is due today. You can pay here: <u>pay.example/2041</u></div>
+        <div class="bubble in">Thanks, we'll pay on the 20th.</div>
+        <div class="bubble sys">Status changed: <b>Promised · 20 Oct</b>. Reminders paused.</div>
+        <div class="bubble sys ok">Payment received. Chasing stopped.</div>
+      </div>
+      <p class="caption">Example with a fictional company</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem" class="band">
+  <div class="wrap">
+    <p class="eyebrow">Why it matters</p>
+    <h2>Late payment is normal in UAE B2B, and it costs more than it looks.</h2>
+    <div class="stats">
+      <div class="stat"><p class="num">2 in 5</p><p>B2B invoices in the UAE are paid late</p></div>
+      <div class="stat"><p class="num">47%</p><p>of B2B sales are made on credit, on average</p></div>
+      <div class="stat"><p class="num">49%</p><p>of delays are blamed on customers' own cash-flow problems</p></div>
+    </div>
+    <p class="source">Source: Atradius Payment Practices Barometer, UAE, survey conducted Q2 2026.</p>
+    <div class="cost">
+      <p class="cost-line">Every late invoice is an interest-free loan to your customer.</p>
+      <ul class="cost-list">
+        <li><b>Cash is stuck</b> while you still pay salaries, rent and suppliers.</li>
+        <li><b>Someone on your team</b> spends hours a week sending reminders and making awkward calls.</li>
+        <li><b>Follow-ups get forgotten</b> when things are busy, so the oldest invoices get the least attention.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2>Four steps, and your team only handles the exceptions.</h2>
+    <ol class="steps">
+      <li><span class="step-n">1</span><h3>Connect</h3><p>Link your accounting software or upload a spreadsheet of invoices and customer contacts.</p></li>
+      <li><span class="step-n">2</span><h3>Watch</h3><p>InvoiceChaser sees what is coming due and what is already overdue, invoice by invoice.</p></li>
+      <li><span class="step-n">3</span><h3>Chase</h3><p>Polite reminders go out on WhatsApp, email and phone, in the right order, at the right time.</p></li>
+      <li><span class="step-n">4</span><h3>Stop</h3><p>The moment a payment arrives, reminders stop. Replies pause the chase and reach the right person.</p></li>
+    </ol>
+
+    <h3 class="sub">A default sequence, timed to the due date</h3>
+    <div class="table-scroll">
+      <table class="seq">
+        <thead><tr><th>When</th><th>Channel</th><th>What happens</th></tr></thead>
+        <tbody>
+          <tr><td>7 days before due</td><td>Email + WhatsApp</td><td>Friendly heads-up with a pay link</td></tr>
+          <tr><td>Due date</td><td>WhatsApp</td><td>Due today, one-tap pay link</td></tr>
+          <tr><td>+3 days</td><td>Email</td><td>Polite notice; asks what is blocking payment</td></tr>
+          <tr><td>+7 days</td><td>WhatsApp</td><td>Amount and pay link; offer to speak</td></tr>
+          <tr><td>+12 days</td><td>Phone call</td><td>Confirms receipt, records a promised date</td></tr>
+          <tr><td>+18 days</td><td>WhatsApp</td><td>Follows up on the call or promise</td></tr>
+          <tr><td>+25 days</td><td>Phone call</td><td>Second call; asks for the finance contact if needed</td></tr>
+          <tr><td>+30 days</td><td>Your team</td><td>Full history handed to your own staff</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fine">Every step can be changed for each customer group. Good payers get one gentle nudge; slow payers get more attention.</p>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo" class="band">
+  <div class="wrap">
+    <p class="eyebrow">Interactive demo</p>
+    <h2>Watch one invoice move through the system.</h2>
+    <p class="lede narrow">This walkthrough uses a fictional company, Al Noor Trading, and fictional customers. Pick what the customer does and see how InvoiceChaser responds.</p>
+
+    <div class="demo">
+      <div class="demo-controls" role="group" aria-label="Choose what the customer does">
+        <button class="chip" data-scenario="pays">Customer pays</button>
+        <button class="chip" data-scenario="promise">Promises a date</button>
+        <button class="chip" data-scenario="dispute">Disputes the invoice</button>
+        <button class="chip" data-scenario="silent">Doesn't reply</button>
+      </div>
+      <div class="demo-body">
+        <ol class="timeline" id="timeline" aria-live="polite"></ol>
+        <aside class="case-card" aria-label="Case status">
+          <p class="eyebrow">Case</p>
+          <p class="case-id">INV-2041 · Gulf Star Contracting</p>
+          <p class="case-amt">AED 18,400</p>
+          <p class="case-state">Status: <span id="caseState" class="pill">Upcoming</span></p>
+          <p class="fine" id="caseNote">Choose a scenario to start.</p>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM -->
+<section id="platform">
+  <div class="wrap">
+    <p class="eyebrow">Platform</p>
+    <h2>One platform, with more agents over time.</h2>
+    <p class="lede narrow">Collections is the first agent. Every agent after it reuses the same case records, rules check, channels and audit log.</p>
+
+    <figure class="diagram">
+      <div class="layer">
+        <span class="node live">Accounting software</span>
+        <span class="node next">E-invoice feeds</span>
+        <span class="node live">Spreadsheet upload</span>
+        <span class="node next">Payments</span>
+      </div>
+      <div class="arrow" aria-hidden="true">↓ normalised into cases</div>
+      <div class="layer"><span class="node core">Case records: what is owed or missing, from whom, and what already happened</span></div>
+      <div class="arrow" aria-hidden="true">↓ what is due next</div>
+      <div class="layer">
+        <span class="node live">Collections</span>
+        <span class="node live">Documents</span>
+        <span class="node next">Disputes</span>
+        <span class="node later">Reconciliation</span>
+        <span class="node later">Forecast</span>
+      </div>
+      <div class="arrow" aria-hidden="true">↓ proposed message or call</div>
+      <div class="layer"><span class="node gate">Rules check on every message: consent, quiet hours, frequency limits, call disclosure</span></div>
+      <div class="arrow" aria-hidden="true">↓ approved actions only</div>
+      <div class="layer">
+        <span class="node live">WhatsApp</span>
+        <span class="node live">Email</span>
+        <span class="node live">Phone</span>
+        <span class="node live">SMS</span>
+      </div>
+      <div class="arrow" aria-hidden="true">↺ replies update the case · disputes and day-30 cases go to your team · everything is logged</div>
+      <figcaption>
+        <span class="key live">Live</span>
+        <span class="key next">Next</span>
+        <span class="key later">Added when customers ask</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust" class="band dark">
+  <div class="wrap trust-grid">
+    <div>
+      <p class="eyebrow">Trust</p>
+      <h2>Your customers are your relationships. The system is built to protect them.</h2>
+      <p class="lede">No agent can send a message on its own. Every message and call passes a rules check first, and every decision is written to a log.</p>
+    </div>
+    <ul class="checks">
+      <li><b>Stops when paid.</b> Payments sync back, so nobody is chased after paying.</li>
+      <li><b>Listens to replies.</b> "Already paid", "I'll pay on the 20th" or "this invoice is wrong" pause the chase.</li>
+      <li><b>Consent and opt-outs</b> respected on every channel, in English and Arabic.</li>
+      <li><b>Quiet hours,</b> Friday prayers and public holidays respected.</li>
+      <li><b>Calls say who is calling</b> and that it is an automated assistant.</li>
+      <li><b>You approve templates</b> before anything is sent.</li>
+      <li><b>A full audit log</b> of every contact, ready for your auditor.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- TIMING -->
+<section id="einvoicing">
+  <div class="wrap">
+    <p class="eyebrow">Why now</p>
+    <h2>UAE e-invoicing turns every invoice into structured data.</h2>
+    <div class="table-scroll">
+      <table class="seq">
+        <thead><tr><th>Date</th><th>Who</th><th>What</th></tr></thead>
+        <tbody>
+          <tr><td>30 Oct 2026</td><td>Revenue of AED 50m or more</td><td>Appoint an accredited service provider</td></tr>
+          <tr><td>1 Jan 2027</td><td>Revenue of AED 50m or more</td><td>E-invoicing mandatory</td></tr>
+          <tr><td>31 Mar 2027</td><td>All other in-scope businesses</td><td>Appoint an accredited service provider</td></tr>
+          <tr><td>1 Jul 2027</td><td>All other in-scope businesses</td><td>E-invoicing mandatory</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fine">InvoiceChaser is designed to work from this structured data, so chasing can start as soon as an invoice is issued. Dates as published by advisers in September 2026; always confirm with the UAE Ministry of Finance and the Federal Tax Authority.</p>
+  </div>
+</section>
+
+<!-- PILOT -->
+<section id="pilot" class="band">
+  <div class="wrap">
+    <p class="eyebrow">Start small</p>
+    <h2>A 30 to 45 day pilot, judged on cash.</h2>
+    <div class="cards three">
+      <div class="card"><span class="step-n">1</span><h3>Free unpaid-invoice check</h3><p>Send your list of unpaid invoices. Within 48 hours we show where cash is stuck and what we would chase first.</p></div>
+      <div class="card"><span class="step-n">2</span><h3>Pilot on real invoices</h3><p>We chase a slice of your overdue invoices. You approve every message template first.</p></div>
+      <div class="card"><span class="step-n">3</span><h3>Review the results</h3><p>Days-to-pay before and after, amount recovered, promises kept, and any customer complaints.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section id="partners">
+  <div class="wrap">
+    <p class="eyebrow">Ways to work with us</p>
+    <h2>Three ways in: use it, refer it, or offer it.</h2>
+    <div class="cards three">
+      <div class="card">
+        <p class="tag">Businesses</p>
+        <h3>Use it directly</h3>
+        <p>A monthly subscription for UAE SMEs who want to get paid faster without hiring someone to chase.</p>
+      </div>
+      <div class="card">
+        <p class="tag">Accounting and bookkeeping firms</p>
+        <h3>Refer your clients</h3>
+        <p>Introduce clients who struggle with late payments. We handle the setup and support, and you earn a share of each subscription.</p>
+      </div>
+      <div class="card">
+        <p class="tag">E-invoicing providers</p>
+        <h3>Offer it to your customers</h3>
+        <p>Add collections to what you sell, alongside your product or under your name, on a revenue-share or wholesale basis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="band">
+  <div class="wrap narrow-wrap">
+    <p class="eyebrow">FAQ</p>
+    <h2>Common questions</h2>
+    <details><summary>Will this annoy my customers?</summary><p>Reminders are polite, timed to the due date, and limited in frequency. Any reply pauses the chase, payment stops it, and you approve every template first.</p></details>
+    <details><summary>What happens if a customer disputes an invoice?</summary><p>The chase stops on that invoice and the case goes to your team with the customer's reason and the full message history.</p></details>
+    <details><summary>Is this a debt collection agency?</summary><p>No. InvoiceChaser is software you use to follow up on your own invoices, in your own name. Unresolved cases go to your own team.</p></details>
+    <details><summary>Which accounting software do you connect to?</summary><p>QuickBooks and spreadsheet uploads today, with more connections, including Zoho Books and e-invoice feeds, on the roadmap. Ask us about yours.</p></details>
+    <details><summary>Which languages and channels?</summary><p>WhatsApp, email, SMS and phone, in English and Arabic.</p></details>
+    <details><summary>What does it cost?</summary><p>Start with the free unpaid-invoice check and a short paid pilot. Monthly plans depend on the number of invoices you manage.</p></details>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="band dark">
+  <div class="wrap contact-grid">
+    <div>
+      <p class="eyebrow">Next step</p>
+      <h2>Show us your overdue invoices.</h2>
+      <p class="lede">Send your aging report and we will show where cash is stuck and what we would chase first. No commitment.</p>
+    </div>
+    <div class="contact-box">
+      <p class="label">Email</p>
+      <p class="contact-val"><a href="mailto:sng19.work@gmail.com">sng19.work@gmail.com</a></p>
+      <p class="label">WhatsApp</p>
+      <p class="contact-val">[Add your number]</p>
+      <p class="fine">Please don't send customer data by email until we've agreed how it will be handled.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p><b>InvoiceChaser</b> · Collections for UAE businesses</p>
+    <p class="fine">Demo content uses fictional companies. Figures are cited where shown.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
