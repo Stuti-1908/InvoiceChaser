@@ -324,8 +324,8 @@ footer{padding-block:56px 40px}
 /* ---- One screen per section (desktop) ---- */
 .feature-head{grid-column:1/-1;margin-bottom:0}
 @media (min-width:981px) and (min-height:540px){
-  html{scroll-snap-type:y proximity;scroll-padding-top:72px}
-  .hero,.section,.features>.feature{scroll-snap-align:start;min-height:calc(100svh - 72px);display:flex;flex-direction:column;justify-content:center}
+  html{scroll-padding-top:72px}
+  .hero,.section,.features>.feature{min-height:calc(100svh - 72px);display:flex;flex-direction:column;justify-content:center}
   .features>.feature{display:grid;grid-template-columns:1fr 1.05fr;align-content:center;gap:clamp(14px,3vh,32px) clamp(32px,5vw,80px)}
   .features{gap:0}
   .section,.section[style]{padding-block:clamp(16px,3.2vh,44px)!important}
@@ -425,6 +425,104 @@ footer{padding-block:56px 40px}
 .brand-prev{display:flex;flex-direction:column;gap:10px}
 @media (max-width:900px){.brand{grid-template-columns:1fr}.bfields{grid-template-columns:1fr 1fr}.bfile{grid-column:1/-1}}
 @media (min-width:981px) and (max-height:800px){#brand .section-head .lead{display:none}.btext textarea{min-height:80px}.pv-body{padding-block:8px}}
+/* builder */
+.wiz-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:clamp(12px,2.4vh,28px);flex-wrap:wrap}
+.wiz-head h2{max-width:720px;font-size:clamp(26px,min(3.4vw,4.6vh),42px)}
+.wiz-head .kicker{margin-bottom:2px}
+.wiz{--wh:clamp(430px,calc(100svh - 72px - 165px),700px);display:grid;grid-template-columns:250px 1fr;background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden;height:var(--wh)}
+.wiz-rail{background:#FBFCFB;border-right:1px solid var(--line);padding:14px 12px;display:flex;flex-direction:column;gap:4px;overflow:auto}
+.wiz-rail button{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:center;padding:clamp(6px,1.1vh,10px) 10px;border-radius:12px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink-2)}
+.wiz-rail button small{display:block;font-weight:400;color:var(--muted);font-size:12px;line-height:1.3}
+.wiz-rail .n{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font:700 13px var(--display);background:var(--white)}
+.wiz-rail .on button{background:var(--mint);color:var(--ink)}
+.wiz-rail .on .n{background:var(--emerald);border-color:var(--emerald);color:#fff}
+.wiz-rail .done .n{background:var(--mint);border-color:var(--emerald);color:var(--emerald-2)}
+.wiz-rail button:focus-visible{outline:3px solid var(--gold)}
+.wiz-stage{display:flex;flex-direction:column;min-width:0;min-height:0}
+.wiz-body{flex:1;overflow:auto;padding:clamp(10px,1.6vh,18px) clamp(16px,2vw,26px);min-height:0}
+.wiz-body h3{font-size:clamp(20px,3vh,26px);margin-bottom:4px}
+.wiz-body .sub{color:var(--muted);font-size:clamp(14px,2vh,16px);margin-bottom:clamp(8px,1.6vh,16px);max-width:60ch}
+.wiz-foot{display:flex;align-items:center;gap:10px;padding:8px 18px;border-top:1px solid var(--line);background:#FBFCFB}
+.wbtn{padding:8px 18px;font-size:14px}
+.wiz-bar{flex:1;height:6px;background:#E6ECEB;border-radius:99px;overflow:hidden}
+.wiz-bar i{display:block;height:100%;width:0;background:var(--emerald);border-radius:99px;transition:width .4s}
+.wiz-body.go>*{animation:wizIn .4s both}
+@keyframes wizIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.a{opacity:0;animation:wizIn .45s forwards;animation-delay:calc(var(--i,0)*110ms)}
+@media (prefers-reduced-motion:reduce){.a,.wiz-body.go>*{animation:none;opacity:1}}
+.srcs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.src{font:600 14px var(--body);display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--white);cursor:pointer;color:var(--ink)}
+.src[aria-pressed=true]{border-color:var(--emerald);background:var(--mint)}
+.src[disabled]{opacity:.5;cursor:not-allowed}
+.src small{font-weight:500;color:var(--muted)}
+.imp{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.imp .r{display:grid;grid-template-columns:24px 1.4fr .8fr .9fr;gap:10px;align-items:center;padding:clamp(6px,1.1vh,10px) 14px;border-top:1px solid var(--line);font-size:14px}
+.imp .r:first-child{border-top:0}
+.imp .r small{color:var(--muted);display:block;font-size:12px}
+.imp .r .amt{text-align:right;font-variant-numeric:tabular-nums}
+.sumline{margin-top:10px;font-weight:600;display:flex;gap:16px;flex-wrap:wrap}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--emerald);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,26px);align-items:start}
+.wiz .fl{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.wiz .fl input[type=text],.wiz .fl input:not([type]),.wiz .fl select,.wiz textarea{font:400 15px var(--body);padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--white);color:var(--ink);width:100%}
+.wiz .fl input[type=color]{width:100%;height:42px;padding:3px;border:1.5px solid var(--line);border-radius:10px;background:var(--white)}
+.wiz .stack{display:flex;flex-direction:column;gap:clamp(8px,1.5vh,14px)}
+.wiz .fl.file{position:relative}
+.wiz .fl.file input{position:absolute;inset:auto 0 0 0;height:42px;opacity:0;cursor:pointer}
+.wiz .fl.file span{display:flex;align-items:center;height:42px;padding:0 12px;border:1.5px dashed var(--line);border-radius:10px;font-weight:500;font-size:13px;color:var(--muted);background:var(--white);overflow:hidden;white-space:nowrap}
+.dns{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:14px}
+.dns div{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-top:1px solid var(--line)}
+.dns div:first-child{border-top:0}
+.dns code,.wiz code{background:#E6ECEB;border-radius:5px;padding:1px 5px;font-size:12px}
+.ok{color:var(--emerald-2);font-weight:600}
+.lockrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.lockchip{font-size:12px;font-weight:600;background:var(--gold-soft);color:#7A5512;border-radius:999px;padding:4px 10px}
+.lockchip::before{content:"\1F512\00a0";font-size:11px}
+.wiz .seg button{padding:7px 14px;font-size:13px}
+.wiz .brand-prev .pv{box-shadow:none}
+.wiz .pv-body{padding-block:10px;font-size:14px;max-height:clamp(110px,26vh,260px);overflow:auto}
+.wiz .pv[dir=rtl]{font-family:var(--arabic)}
+.tg{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;cursor:pointer}
+.tg input{accent-color:var(--emerald);width:18px;height:18px}
+.sched{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.sched .rg{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:center;padding:clamp(6px,1.1vh,10px) 14px;border-top:1px dashed var(--line);font-size:14px;transition:opacity .25s}
+.sched .rg:first-child{border-top:0}
+.sched .rg.off{opacity:.35}
+.sched .d{font:700 14px var(--display);color:var(--emerald)}
+.sched .rg.team .d{color:var(--gold)}
+.chs{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.rules{display:flex;flex-direction:column;gap:8px}
+.rule{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;padding:clamp(7px,1.2vh,11px) 14px;border:1px solid var(--line);border-radius:12px;font-size:14px}
+.rule .ck{width:22px;height:22px;border-radius:50%;background:#E6ECEB;display:grid;place-items:center;font-size:12px;transition:background .3s}
+.rule.pass .ck{background:var(--emerald);color:#fff}
+.sim{display:grid;grid-template-columns:150px 1fr;gap:16px}
+.day{background:var(--ink);color:#fff;border-radius:14px;padding:16px;text-align:center;align-self:start}
+.day b{display:block;font:800 40px/1 var(--display);margin:6px 0}
+.day small{color:#A9C0BC}
+.day .st{margin-top:10px}
+.evs{display:flex;flex-direction:column;gap:clamp(4px,.7vh,7px)}
+.evx{display:grid;grid-template-columns:54px 30px 1fr;gap:10px;align-items:center;padding:clamp(4px,.8vh,8px) 12px;border-radius:12px;background:#F6F8F7;font-size:14px;animation:wizIn .4s both}
+.evx .t{font:700 13px var(--display);color:var(--emerald)}
+.evx .ic{width:28px;height:28px;border-radius:50%;background:var(--white);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--ink-2)}
+.evx.cust{background:var(--mint)}.evx.hand{background:var(--gold-soft)}.evx.stop{background:var(--mint);font-weight:600}
+.evx small{display:block;color:var(--muted);font-size:12.5px}
+.handoff{display:grid;grid-template-columns:1fr 40px 1fr;gap:10px;align-items:center}
+.hcard{border:1px solid var(--line);border-radius:14px;padding:14px;font-size:14px;background:var(--white)}
+.hcard b{display:block;margin-bottom:6px}
+.hcard li{padding:3px 0;color:var(--ink-2)}
+.arrow{font-size:26px;color:var(--emerald);text-align:center}
+.ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+@media (max-width:980px){
+  .wiz{grid-template-columns:1fr;height:auto}
+  .wiz-rail{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}
+  .wiz-rail li{flex:none}.wiz-rail button{width:auto;grid-template-columns:28px auto}.wiz-rail small{display:none}
+  .wiz-body{overflow:visible}
+  .two,.sim,.handoff{grid-template-columns:1fr}
+  .arrow{transform:rotate(90deg)}
+  .imp .r{grid-template-columns:24px 1fr auto}.imp .r span:nth-child(4){display:none}
+}
+@media (min-width:981px) and (max-height:760px){.wiz-head .small{display:none}.wiz-head h2{font-size:clamp(24px,4.4vh,34px)}}
 </style>
 </head>
 <body>
@@ -628,66 +726,29 @@ footer{padding-block:56px 40px}
   </div>
 </section>
 
-<!-- BRANDING -->
-<section class="section" id="brand">
+<!-- BUILDER -->
+<section class="section wizsec" id="how">
   <div class="wrap">
-    <div class="section-head">
-      <p class="kicker">Your voice, your brand</p>
-      <h2>Every message sounds like your company.</h2>
-      <p class="lead">Start from our tested defaults, then change the wording and tone, add your logo and colour, and choose how each channel looks.</p>
+    <div class="wiz-head">
+      <div><h2>Build your chase, step by step.</h2></div>
+      <p class="small">Fictional data. Everything runs in your browser; nothing is sent.</p>
     </div>
-    <div class="brand">
-      <div class="brand-ctl">
-        <div class="seg" role="tablist" aria-label="Channel">
-          <button role="tab" data-ch="email" aria-selected="true">Email</button>
-          <button role="tab" data-ch="sms" aria-selected="false">SMS</button>
-          <button role="tab" data-ch="wa" aria-selected="false">WhatsApp</button>
+    <div class="wiz" id="wiz">
+      <ol class="wiz-rail" id="wizRail"></ol>
+      <div class="wiz-stage">
+        <div class="wiz-body" id="wizBody" aria-live="polite"></div>
+        <div class="wiz-foot">
+          <div class="wiz-bar"><i id="wizProg"></i></div>
+          <button type="button" class="btn btn-line wbtn" id="wizBack">Back</button>
+          <button type="button" class="btn btn-line wbtn" id="wizAuto">Auto-play</button>
+          <button type="button" class="btn btn-primary wbtn" id="wizNext">Next</button>
         </div>
-        <div class="seg" role="group" aria-label="Tone">
-          <button data-tone="friendly" aria-pressed="true">Friendly</button>
-          <button data-tone="professional" aria-pressed="false">Professional</button>
-          <button data-tone="firm" aria-pressed="false">Firm</button>
-        </div>
-        <div class="bfields">
-          <label>Company name<input id="bName" value="Al Noor Trading" maxlength="40"></label>
-          <label>Brand colour<input id="bColor" type="color" value="#0B8A6B"></label>
-          <label class="bfile">Logo<input id="bLogo" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp"><span id="bLogoName">Upload PNG, JPG or SVG</span></label>
-        </div>
-        <label class="btext">Message template <button type="button" id="bReset" class="link">Reset to default</button>
-          <textarea id="bText" rows="6" spellcheck="false"></textarea>
-        </label>
-        <p class="small">Fields filled in automatically: <code>{customer}</code> <code>{invoice}</code> <code>{amount}</code> <code>{due}</code> <code>{company}</code> <code>{link}</code></p>
-      </div>
-      <div class="brand-prev" aria-live="polite">
-        <div class="pv pv-email" id="pvEmail">
-          <div class="pv-top" id="pvTop"><span class="pv-logo" id="pvLogo"></span><b id="pvCo">Al Noor Trading</b></div>
-          <div class="pv-sub"><small>Subject</small><b id="pvSubj"></b></div>
-          <div class="pv-body" id="pvBody"></div>
-          <span class="pv-btn" id="pvBtn">View and pay invoice</span>
-        </div>
-        <div class="pv pv-sms" id="pvSms" hidden><div class="bubble" id="pvSmsText"></div><p class="small" id="pvCount"></p></div>
-        <div class="pv pv-wa" id="pvWa" hidden><div class="bubble wa" id="pvWaText"></div></div>
-        <p class="small">Preview with sample data. Nothing is sent from this page.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- HOW -->
-<section class="section how on-dark" id="how">
-  <div class="wrap">
-    <div class="section-head">
-      <p class="kicker">How it works</p>
-      <h2>Live in days. Your team only handles the exceptions.</h2>
-    </div>
-    <ol class="steps">
-      <li class="step"><h3>Connect</h3><p>Link your accounting software or upload a spreadsheet of invoices and contacts.</p></li>
-      <li class="step"><h3>Approve</h3><p>Review the message templates and schedule. Nothing goes out until you say so.</p></li>
-      <li class="step"><h3>Chase</h3><p>Reminders go out on WhatsApp, email and phone, timed to each due date.</p></li>
-      <li class="step"><h3>Get paid</h3><p>Payments stop the chase. Disputes and stubborn cases come to your team.</p></li>
-    </ol>
-  </div>
-</section>
+
 
 <!-- DEMO -->
 <section class="section" id="demo">
@@ -997,46 +1058,209 @@ btns.forEach(b=>b.addEventListener('click',()=>play(b.dataset.s)));play('promise
  render();
 })();
 </script>
+
 <script>
 (function(){
-  const T={
-    email:{
-      friendly:{s:'A friendly reminder about invoice {invoice}',t:'Hi {customer},\n\nJust a quick reminder that invoice {invoice} for {amount} was due on {due}. You can pay it in one tap here: {link}\n\nIf it is already on its way, thank you! Reply to this email if anything is unclear.\n\nWarm regards,\n{company}'},
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const body=$('#wizBody'); if(!body)return;
+const T={
+ email:{
+  en:{friendly:{s:'A friendly reminder about invoice {invoice}',t:'Hi {customer},\n\nJust a quick reminder that invoice {invoice} for {amount} was due on {due}. You can pay it in one tap here: {link}\n\nIf it is already on its way, thank you! Reply to this email if anything is unclear.\n\nWarm regards,\n{company}'},
       professional:{s:'Invoice {invoice}: payment due {due}',t:'Dear {customer},\n\nOur records show invoice {invoice} for {amount}, due on {due}, is still open. You can settle it here: {link}\n\nPlease let us know if you need a copy of the invoice or if there is a query we can resolve.\n\nKind regards,\n{company}'},
       firm:{s:'Overdue: invoice {invoice} ({amount})',t:'Dear {customer},\n\nInvoice {invoice} for {amount} was due on {due} and remains unpaid. Please pay today using {link}, or reply with the date we can expect payment.\n\nRegards,\n{company}'}},
-    sms:{
-      friendly:{t:'Hi {customer}, a friendly reminder: invoice {invoice} ({amount}) was due {due}. Pay here: {link} Thanks! {company}'},
+  ar:{friendly:{s:'تذكير ودّي بشأن الفاتورة {invoice}',t:'مرحباً {customer}،\n\nتذكير سريع بأن الفاتورة {invoice} بقيمة {amount} كان موعد استحقاقها {due}. يمكنك الدفع بضغطة واحدة من هنا: {link}\n\nإن كانت الدفعة في طريقها إليكم فشكراً لكم! ويمكنكم الرد على هذه الرسالة لأي استفسار.\n\nمع أطيب التحيات،\n{company}'},
+      professional:{s:'الفاتورة {invoice}: موعد الاستحقاق {due}',t:'السيد/السيدة {customer} المحترم/ة،\n\nتشير سجلاتنا إلى أن الفاتورة {invoice} بقيمة {amount}، المستحقة بتاريخ {due}، ما زالت غير مسددة. يمكنكم السداد من هنا: {link}\n\nيرجى إبلاغنا إن احتجتم إلى نسخة من الفاتورة أو كان لديكم أي استفسار.\n\nوتفضلوا بقبول فائق الاحترام،\n{company}'},
+      firm:{s:'متأخرة: الفاتورة {invoice} ({amount})',t:'السيد/السيدة {customer} المحترم/ة،\n\nالفاتورة {invoice} بقيمة {amount} كان موعد استحقاقها {due} وما زالت غير مسددة. يرجى السداد اليوم عبر {link}، أو الرد بتاريخ السداد المتوقع.\n\nمع التحية،\n{company}'}}},
+ sms:{
+  en:{friendly:{t:'Hi {customer}, a friendly reminder: invoice {invoice} ({amount}) was due {due}. Pay here: {link} Thanks! {company}'},
       professional:{t:'{company}: invoice {invoice} for {amount}, due {due}, is open. Pay: {link}'},
       firm:{t:'{company}: invoice {invoice} ({amount}) is overdue since {due}. Pay today: {link} or reply with a payment date.'}},
-    wa:{
-      friendly:{t:'Hi {customer}, hope you are well! A quick reminder that invoice {invoice} for {amount} was due on {due}. Here is a one-tap link to pay: {link}\nThank you! {company}'},
+  ar:{friendly:{t:'مرحباً {customer}، تذكير ودّي: الفاتورة {invoice} ({amount}) كان استحقاقها {due}. للدفع: {link} شكراً! {company}'},
+      professional:{t:'{company}: الفاتورة {invoice} بقيمة {amount}، المستحقة {due}، غير مسددة. للدفع: {link}'},
+      firm:{t:'{company}: الفاتورة {invoice} ({amount}) متأخرة منذ {due}. يرجى الدفع اليوم: {link} أو الرد بتاريخ السداد.'}}},
+ wa:{
+  en:{friendly:{t:'Hi {customer}, hope you are well! A quick reminder that invoice {invoice} for {amount} was due on {due}. Here is a one-tap link to pay: {link}\nThank you! {company}'},
       professional:{t:'Dear {customer}, invoice {invoice} for {amount}, due {due}, is still open. You can pay here: {link}\nKind regards, {company}'},
-      firm:{t:'Dear {customer}, invoice {invoice} for {amount} was due on {due} and is overdue. Please pay today: {link} or reply with the date of payment.\n{company}'}}
-  };
-  const $=id=>document.getElementById(id);
-  if(!$('bText'))return;
-  let ch='email',tone='friendly',edited=false,logo=null;
-  const data=()=>({customer:'Khalid',invoice:'INV-2033',amount:'AED 42,750',due:'12 Oct',company:$('bName').value.trim()||'Your company',link:'pay.invoicechaser.com/2033'});
-  const fill=s=>{const d=data();return s.replace(/\{(\w+)\}/g,(m,k)=>d[k]!==undefined?d[k]:m)};
-  function load(){const d=T[ch][tone];$('bText').value=d.t;edited=false;render()}
-  function render(){
-    const t=fill($('bText').value),c=$('bColor').value,co=data().company;
-    document.querySelector('#brand .brand-prev').style.setProperty('--bc',c);
-    $('pvEmail').hidden=ch!=='email';$('pvSms').hidden=ch!=='sms';$('pvWa').hidden=ch!=='wa';
-    $('pvCo').textContent=co;
-    const lg=$('pvLogo');lg.textContent='';
-    if(logo){const i=new Image();i.src=logo;i.alt='';lg.appendChild(i)}else lg.textContent=co.charAt(0).toUpperCase();
-    if(ch==='email'){$('pvSubj').textContent=fill(T.email[tone].s);$('pvBody').textContent=t}
-    if(ch==='sms'){$('pvSmsText').textContent=t;const n=t.length;$('pvCount').textContent=n+' characters · '+Math.ceil(n/160)+' SMS part'+(n>160?'s':'')}
-    if(ch==='wa')$('pvWaText').textContent=t;
-  }
-  document.querySelectorAll('[data-ch]').forEach(b=>b.onclick=()=>{ch=b.dataset.ch;document.querySelectorAll('[data-ch]').forEach(x=>x.setAttribute('aria-selected',x===b));load()});
-  document.querySelectorAll('[data-tone]').forEach(b=>b.onclick=()=>{tone=b.dataset.tone;document.querySelectorAll('[data-tone]').forEach(x=>x.setAttribute('aria-pressed',x===b));load()});
-  ['bName','bColor','bText'].forEach(id=>$(id).addEventListener('input',render));
-  $('bReset').onclick=load;
-  $('bLogo').onchange=e=>{const f=e.target.files[0];if(!f)return;if(f.size>2e6){$('bLogoName').textContent='Choose a file under 2 MB';return}
-    const r=new FileReader();r.onload=()=>{logo=r.result;$('bLogoName').textContent=f.name;render()};r.readAsDataURL(f)};
-  load();
+      firm:{t:'Dear {customer}, invoice {invoice} for {amount} was due on {due} and is overdue. Please pay today: {link} or reply with the date of payment.\n{company}'}},
+  ar:{friendly:{t:'مرحباً {customer}، أتمنى أن تكونوا بخير! تذكير سريع بأن الفاتورة {invoice} بقيمة {amount} كان استحقاقها {due}. رابط الدفع بضغطة واحدة: {link}\nشكراً لكم! {company}'},
+      professional:{t:'السيد/السيدة {customer} المحترم/ة، الفاتورة {invoice} بقيمة {amount}، المستحقة {due}، ما زالت غير مسددة. للدفع: {link}\nمع التحية، {company}'},
+      firm:{t:'السيد/السيدة {customer} المحترم/ة، الفاتورة {invoice} بقيمة {amount} متأخرة منذ {due}. يرجى الدفع اليوم: {link} أو الرد بتاريخ السداد.\n{company}'}}}
+};
+const CUST=[
+ {n:'Gulf Star Contracting',i:'INV-2041',a:18400,d:'8 days late'},
+ {n:'Marina Facilities LLC',i:'INV-2033',a:42750,d:'21 days late'},
+ {n:'Desert Rose Logistics',i:'INV-2050',a:9120,d:'due today'},
+ {n:'Palm Line Supplies',i:'INV-2018',a:27300,d:'12 days late'},
+ {n:'Creek Side Interiors',i:'INV-2027',a:13980,d:'5 days late'}];
+const S={src:null,loading:false,chosen:[1,1,1,1,1],name:'Al Noor Trading',color:'#0B8A6B',logo:null,logoName:'',domain:'',dnsOk:false,
+ ch:'email',tone:'friendly',lang:'en',edits:{},chans:{email:true,sms:true,wa:true,voice:true},handoff:30,weekly:2,scen:'pay',step:0,auto:false};
+const timers=[]; const later=(f,ms)=>{const t=setTimeout(f,ms);timers.push(t);return t};
+const clearT=()=>{while(timers.length)clearTimeout(timers.pop())};
+const dat=()=>({customer:S.lang==='ar'?'خالد':'Khalid',invoice:'INV-2033',amount:S.lang==='ar'?'42,750 درهم':'AED 42,750',due:S.lang==='ar'?'12 أكتوبر':'12 Oct',company:S.name.trim()||'Your company',link:'pay.invoicechaser.com/2033'});
+const fill=s=>{const d=dat();return s.replace(/\{(\w+)\}/g,(m,k)=>d[k]!==undefined?d[k]:m)};
+const key=()=>S.ch+'|'+S.tone+'|'+S.lang;
+const tpl=()=>S.edits[key()]!==undefined?S.edits[key()]:T[S.ch][S.lang][S.tone].t;
+const money=n=>n.toLocaleString('en-US');
+const total=()=>CUST.reduce((s,c,i)=>s+(S.chosen[i]?c.a:0),0);
+const count=()=>S.chosen.reduce((a,b)=>a+b,0);
+
+const STEPS=[
+ {t:'Connect your invoices',s:'Import from your accounting software or a spreadsheet',sub:'Choose where your unpaid invoices live. We read them; your books stay the source of truth.',r:rConnect},
+ {t:'Brand and sender',s:'Name, logo, colour, your email domain',sub:'Messages go out under your company name. Add your own domain so emails come from accounts@yourcompany.',r:rBrand},
+ {t:'Message templates',s:'Email, SMS, WhatsApp, tone, Arabic',sub:'Start from our tested wording, then edit it. The legally required parts stay locked.',r:rTpl},
+ {t:'Schedule and channels',s:'Who is contacted, when and how',sub:'Turn channels on or off. The schedule adapts, and your team takes over on the day you choose.',r:rSched},
+ {t:'Safety rules',s:'Checked before every message',sub:'Every message passes these checks. If one fails, it is held and logged.',r:rRules},
+ {t:'Watch it chase',s:'A customer pays, or goes quiet',sub:'Choose what the customer does and watch the days pass.',r:rSim},
+ {t:'When a person steps in',s:'Handover with the full history',sub:'Disputes and stubborn cases go to your team, never to a robot.',r:rHand}];
+
+const rail=$('#wizRail');
+STEPS.forEach((st,i)=>{const li=document.createElement('li');li.innerHTML=`<button type="button"><span class="n">${i+1}</span><span>${st.t}<small>${st.s}</small></span></button>`;li.firstChild.onclick=()=>go(i);rail.appendChild(li)});
+
+function go(i){S.step=Math.max(0,Math.min(STEPS.length-1,i));clearT();
+ $$('li',rail).forEach((li,k)=>{li.className=k===S.step?'on':k<S.step?'done':'';$('button',li).setAttribute('aria-current',k===S.step?'step':'false')});
+ $('#wizProg').style.width=((S.step+1)/STEPS.length*100)+'%';
+ $('#wizBack').disabled=S.step===0;$('#wizBack').style.opacity=S.step===0?.4:1;
+ const nx=$('#wizNext');nx.textContent=S.step===STEPS.length-1?'Start over':'Next';
+ const st=STEPS[S.step];
+ body.className='wiz-body';body.innerHTML=`<h3>${st.t}</h3><p class="sub">${st.sub}</p><div id="wizMain"></div>`;
+ void body.offsetWidth;body.classList.add('go');body.scrollTop=0;
+ st.r($('#wizMain'));
+ if(S.auto)later(()=>{if(S.step<STEPS.length-1)go(S.step+1);else setAuto(false)},S.step===5?15000:S.step===0?6500:6000);
+}
+function setAuto(v){S.auto=v;$('#wizAuto').textContent=v?'Pause':'Auto-play';if(v&&S.step===STEPS.length-1){go(0)}else if(v){go(S.step)}else clearAutoOnly()}
+function clearAutoOnly(){/* timers also drive the sim; just let current sim finish */}
+$('#wizNext').onclick=()=>{S.auto=false;$('#wizAuto').textContent='Auto-play';S.step===STEPS.length-1?go(0):go(S.step+1)};
+$('#wizBack').onclick=()=>{S.auto=false;$('#wizAuto').textContent='Auto-play';go(S.step-1)};
+$('#wizAuto').onclick=()=>{ if(S.auto){S.auto=false;$('#wizAuto').textContent='Auto-play';}else{S.auto=true;$('#wizAuto').textContent='Pause';if(S.step===STEPS.length-1)S.step=-1;go(S.step+1)} };
+
+/* 0 connect */
+function rConnect(m){
+ m.innerHTML=`<div class="srcs">
+  <button class="src" data-src="QuickBooks" aria-pressed="${S.src==='QuickBooks'}">QuickBooks</button>
+  <button class="src" data-src="Excel or CSV" aria-pressed="${S.src==='Excel or CSV'}">Excel or CSV</button>
+  <button class="src" disabled>Zoho Books <small>soon</small></button>
+  <button class="src" disabled>Xero <small>soon</small></button>
+  <button class="src" disabled>E-invoice feed <small>soon</small></button></div><div id="impBox"></div>`;
+ $$('.src[data-src]',m).forEach(b=>b.onclick=()=>{S.src=b.dataset.src;S.loading=true;rConnect(m);later(()=>{S.loading=false;showImp()},1200)});
+ if(S.src){ if(S.loading){ $('#impBox').innerHTML=`<p><span class="spin"></span>Reading invoices from ${esc(S.src)}…</p>`; } else showImp(true); }
+ else $('#impBox').innerHTML='<p class="small">Pick a source to see your customers appear.</p>';
+ function showImp(instant){const box=$('#impBox');if(!box)return;
+  box.innerHTML=`<div class="imp">${CUST.map((c,i)=>`<label class="r ${instant?'':'a'}" style="--i:${i}"><input type="checkbox" data-i="${i}" ${S.chosen[i]?'checked':''} aria-label="Chase ${esc(c.n)}"><span>${c.n}<small>${c.i} · ${c.d}</small></span><span class="amt">AED ${money(c.a)}</span><span class="st ${i===1?'st-over':i===2?'st-due':'st-prom'}">${i===1?'Overdue':i===2?'Due today':'Late'}</span></label>`).join('')}</div>
+  <div class="sumline" id="sum"></div><p class="small">Demo: five of 128 imported invoices. Untick any customer you do not want chased.</p>`;
+  const sum=()=>$('#sum').innerHTML=`<span>${count()} customers selected</span><span>AED ${money(total())} to collect</span>`;sum();
+  $$('input[data-i]',box).forEach(c=>c.onchange=()=>{S.chosen[+c.dataset.i]=c.checked?1:0;sum()});}
+}
+/* 1 brand */
+function rBrand(m){
+ m.innerHTML=`<div class="two"><div class="stack">
+  <label class="fl">Company name<input id="bn" value="${esc(S.name)}" maxlength="40"></label>
+  <div class="two" style="gap:12px"><label class="fl">Brand colour<input id="bc" type="color" value="${S.color}"></label>
+  <label class="fl file">Logo<input id="bl" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp"><span id="bln">${esc(S.logoName||'Upload PNG, JPG or SVG')}</span></label></div>
+  <label class="fl">Send emails from your own domain<input id="bd" placeholder="alnoortrading.ae" value="${esc(S.domain)}"></label>
+  <button class="btn btn-line wbtn" id="bv" style="align-self:flex-start">Check domain records</button></div>
+  <div class="stack"><div class="brand-prev" id="bp"><div class="pv"><div class="pv-top"><span class="pv-logo" id="pl"></span><b id="pn"></b></div>
+  <div class="pv-sub"><small>From</small><b id="pf"></b></div><div class="pv-body" style="white-space:normal">Hi Khalid, a quick reminder about invoice INV-2033…</div><span class="pv-btn" style="background:var(--bc)">View and pay invoice</span></div></div>
+  <div class="dns" id="dns"></div></div></div>`;
+ const prev=()=>{const bp=$('#bp');bp.style.setProperty('--bc',S.color);$('#pn').textContent=S.name.trim()||'Your company';
+  const pl=$('#pl');pl.textContent='';if(S.logo){const i=new Image();i.src=S.logo;i.alt='';pl.appendChild(i)}else pl.textContent=(S.name.trim()||'Y').charAt(0).toUpperCase();
+  $('#pf').textContent=S.dnsOk&&S.domain?'Accounts <accounts@'+S.domain.trim()+'>':'Accounts via InvoiceChaser mail'};
+ const dns=()=>{const rows=['SPF','DKIM','DMARC'];$('#dns').innerHTML=S.domain.trim()?rows.map(r=>`<div><span>${r} record</span><span class="${S.dnsOk?'ok':''}">${S.dnsOk?'Verified':'Not checked'}</span></div>`).join(''):'<div><span class="small">Add your domain to send as accounts@yourcompany. Without one, emails go out via InvoiceChaser mail.</span></div>'};
+ prev();dns();
+ $('#bn').oninput=e=>{S.name=e.target.value;prev()};$('#bc').oninput=e=>{S.color=e.target.value;prev()};
+ $('#bd').oninput=e=>{S.domain=e.target.value.replace(/\s/g,'');S.dnsOk=false;prev();dns()};
+ $('#bl').onchange=e=>{const f=e.target.files[0];if(!f)return;if(f.size>2e6){$('#bln').textContent='Choose a file under 2 MB';return}const r=new FileReader();r.onload=()=>{S.logo=r.result;S.logoName=f.name;$('#bln').textContent=f.name;prev()};r.readAsDataURL(f)};
+ $('#bv').onclick=()=>{if(!S.domain.trim()){$('#bd').focus();return}S.dnsOk=false;prev();
+  const rows=['SPF','DKIM','DMARC'];$('#dns').innerHTML=rows.map(r=>`<div><span>${r} record</span><span id="d_${r}"><span class="spin"></span>Checking</span></div>`).join('');
+  rows.forEach((r,i)=>later(()=>{const e=$('#d_'+r);if(e){e.className='ok';e.textContent='Verified'}if(i===2){S.dnsOk=true;prev()}},700*(i+1)))};
+}
+/* 2 templates */
+function rTpl(m){
+ const rtl=S.lang==='ar';
+ m.innerHTML=`<div class="two"><div class="stack">
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><div class="seg" role="tablist" aria-label="Channel">${[['email','Email'],['sms','SMS'],['wa','WhatsApp']].map(([k,l])=>`<button data-ch="${k}" aria-selected="${S.ch===k}">${l}</button>`).join('')}</div>
+  <div class="seg" aria-label="Language">${[['en','English'],['ar','العربية']].map(([k,l])=>`<button data-wl="${k}" aria-pressed="${S.lang===k}">${l}</button>`).join('')}</div></div>
+  <div class="seg" aria-label="Tone">${[['friendly','Friendly'],['professional','Professional'],['firm','Firm']].map(([k,l])=>`<button data-tone="${k}" aria-pressed="${S.tone===k}">${l}</button>`).join('')}</div>
+  <label class="fl">Message template <textarea id="tt" rows="4" spellcheck="false" ${rtl?'dir="rtl"':''}></textarea></label>
+  <div class="lockrow" id="locks"></div>
+  <p class="small">Filled in automatically: <code>{customer}</code> <code>{invoice}</code> <code>{amount}</code> <code>{due}</code> <code>{company}</code> <code>{link}</code> <button type="button" class="link" id="tr" style="background:none;border:0;color:var(--emerald);font-weight:600;cursor:pointer;text-decoration:underline">Reset</button></p></div>
+  <div class="brand-prev" id="bp"></div></div>`;
+ $('#tt').value=tpl();
+ const L={email:['Unsubscribe link and your company details are added to every email'],sms:['“Reply STOP to opt out” is added to every SMS'],wa:['WhatsApp wording is submitted to Meta for approval before it is used']};
+ $('#locks').innerHTML=L[S.ch].map(x=>`<span class="lockchip">${x}</span>`).join('');
+ const draw=()=>{const t=fill($('#tt').value),bp=$('#bp');bp.style.setProperty('--bc',S.color);const co=dat().company;
+  const lg=S.logo?`<img src="${S.logo}" alt="">`:esc(co.charAt(0).toUpperCase());
+  const dir=rtl?' dir="rtl"':'';
+  if(S.ch==='email')bp.innerHTML=`<div class="pv"${dir}><div class="pv-top"><span class="pv-logo">${lg}</span><b>${esc(co)}</b></div><div class="pv-sub"><small>${rtl?'الموضوع':'Subject'}</small><b>${esc(fill(T.email[S.lang][S.tone].s))}</b></div><div class="pv-body"></div><span class="pv-btn">${rtl?'عرض الفاتورة والدفع':'View and pay invoice'}</span><div class="pv-sub" style="border:0;border-top:1px solid var(--line);font-size:12px;color:var(--muted)">${rtl?'إلغاء الاشتراك · '+esc(co)+'، الإمارات':'Unsubscribe · '+esc(co)+', UAE'}</div></div>`,$('.pv-body',bp).textContent=t;
+  else if(S.ch==='sms'){const full=t+(rtl?' للإلغاء أرسل STOP.':' Reply STOP to opt out.');bp.innerHTML=`<div class="pv pv-sms"${dir}><div class="bubble"></div><p class="small">${full.length} characters · ${Math.ceil(full.length/(rtl?70:160))} SMS part${full.length>(rtl?70:160)?'s':''}</p></div>`;$('.bubble',bp).textContent=full}
+  else{bp.innerHTML=`<div class="pv pv-wa"${dir}><div class="bubble wa"></div></div>`;$('.bubble',bp).textContent=t}};
+ draw();
+ $('#tt').oninput=e=>{S.edits[key()]=e.target.value;draw()};
+ $('#tr').onclick=()=>{delete S.edits[key()];$('#tt').value=tpl();draw()};
+ $$('[data-ch]',m).forEach(b=>b.onclick=()=>{S.ch=b.dataset.ch;rTpl(m)});
+ $$('[data-wl]',m).forEach(b=>b.onclick=()=>{S.lang=b.dataset.wl;rTpl(m)});
+ $$('[data-tone]',m).forEach(b=>b.onclick=()=>{S.tone=b.dataset.tone;rTpl(m)});
+}
+/* 3 schedule */
+const RUNGS=[{d:'−7',x:'Friendly heads-up with pay link',k:['email','wa']},{d:'Due',x:'One-tap pay link',k:['wa']},{d:'+3',x:'Asks what is blocking payment',k:['sms','email']},{d:'+7',x:'Amount, link and offer to talk',k:['wa']},{d:'+12',x:'Confirms receipt, records a date',k:['voice']},{d:'+25',x:'Follows up on the promise',k:['voice']}];
+const CN={email:'Email',sms:'SMS',wa:'WhatsApp',voice:'Phone'};
+function rSched(m){
+ m.innerHTML=`<div class="chs">${Object.keys(CN).map(k=>`<label class="tg"><input type="checkbox" data-k="${k}" ${S.chans[k]?'checked':''}>${CN[k]}</label>`).join('')}
+ <label class="fl" style="flex-direction:row;align-items:center;gap:8px">Your team takes over at day <select id="ho" style="width:auto">${[21,30,45].map(n=>`<option ${n===S.handoff?'selected':''}>${n}</option>`).join('')}</select></label></div><div class="sched" id="sch"></div>
+ <p class="small" style="margin-top:8px">Based on each invoice's due date. Good payers get one nudge. Slow payers get more attention.</p>`;
+ const draw=()=>{$('#sch').innerHTML=RUNGS.map((r,i)=>{const on=r.k.filter(k=>S.chans[k]);return `<div class="rg ${on.length?'':'off'} a" style="--i:${i}"><span class="d">${r.d}</span><span>${r.x}</span><span class="st st-due">${on.length?on.map(k=>CN[k]).join(' + '):'Skipped'}</span></div>`}).join('')+`<div class="rg team a" style="--i:6"><span class="d">+${S.handoff}</span><span><b>Handed to your team</b></span><span class="st st-paid">Your staff</span></div>`};
+ draw();
+ $$('[data-k]',m).forEach(c=>c.onchange=()=>{S.chans[c.dataset.k]=c.checked;draw()});
+ $('#ho').onchange=e=>{S.handoff=+e.target.value;draw()};
+}
+/* 4 rules */
+function rRules(m){
+ const R=[['Customer has not opted out','Locked'],['Invoice is still unpaid','Locked'],['No open dispute','Locked'],['Not during quiet hours (9pm to 8am)','Locked'],['Outside Friday prayer time (held until 14:00)','Locked'],['Under the weekly contact limit','limit'],['Calls start by saying it is an automated assistant','Locked']];
+ m.innerHTML=`<div class="rules">${R.map((r,i)=>`<div class="rule" id="ru${i}"><span class="ck">•</span><span>${r[0]}</span>${r[1]==='limit'?`<select id="wk" style="width:auto;font:400 14px var(--body);padding:4px 8px;border:1.5px solid var(--line);border-radius:8px">${[1,2,3,4].map(n=>`<option value="${n}" ${n===S.weekly?'selected':''}>${n} a week</option>`).join('')}</select>`:'<span class="lockchip">Locked</span>'}</div>`).join('')}</div>
+ <p class="small" style="margin-top:8px">Every decision is written to a log you can show your auditor.</p>`;
+ R.forEach((_,i)=>later(()=>{const e=$('#ru'+i);if(e){e.classList.add('pass');$('.ck',e).textContent='✓'}},500+i*450));
+ $('#wk').onchange=e=>S.weekly=+e.target.value;
+}
+/* 5 sim */
+function events(scen){
+ const E=[],c=S.chans;
+ if(c.email)E.push(['−7','E','Email sent','Friendly heads-up with the pay link']);
+ if(c.wa)E.push(['Due','W','WhatsApp sent','“Invoice INV-2033 for AED 42,750 is due today.”']);
+ if(c.sms)E.push(['+3','S','SMS sent','Short reminder with the pay link']);else if(c.email)E.push(['+3','E','Email sent','Polite note asking if anything is blocking payment']);
+ if(c.wa)E.push(['+7','W','WhatsApp sent','Amount, pay link and an offer to talk']);
+ if(scen==='pay'){
+  E.push(['+8','C','Customer replied','“We’ll pay on the 20th.” Date recorded on the invoice.','cust']);
+  E.push(['+8','⏸','Reminders paused','Nothing more is sent until the day after the promise.']);
+  E.push(['+13','AED','Payment received','AED 42,750 matched. Chasing stopped. Invoice marked paid.','stop']);
+ }else{
+  if(c.voice)E.push(['+12','P','Voice call','Introduces itself as an automated assistant. No answer; a retry is booked.']);
+  else if(c.email)E.push(['+12','E','Email sent','Asks for a payment date']);
+  if(c.voice)E.push(['+25','P','Voice call','Reminds about the unpaid invoice. Customer says they will check.']);
+  E.push(['+'+S.handoff,'👤','Handed to your team','Full history and every message attached.','hand']);
+ }
+ return E;
+}
+function rSim(m){
+ m.innerHTML=`<div class="seg" style="margin-bottom:12px">${[['pay','Customer promises and pays'],['silent','Customer goes quiet']].map(([k,l])=>`<button data-sc="${k}" aria-pressed="${S.scen===k}">${l}</button>`).join('')}</div>
+ <div class="sim"><div class="day"><small>Invoice INV-2033</small><b id="dy">Day −7</b><small>AED 42,750</small><div><span class="st st-due" id="ds">Upcoming</span></div></div><div class="evs" id="ev"></div></div>`;
+ $$('[data-sc]',m).forEach(b=>b.onclick=()=>{S.scen=b.dataset.sc;clearT();rSim(m)});
+ const ev=events(S.scen);
+ ev.forEach((e,i)=>later(()=>{const box=$('#ev');if(!box)return;const d=document.createElement('div');d.className='evx '+(e[4]||'');
+  d.innerHTML=`<span class="t">${e[0]}</span><span class="ic">${e[1]}</span><span><b>${esc(e[2])}</b><small>${esc(e[3])}</small></span>`;box.appendChild(d);
+  $('#dy').textContent='Day '+e[0];const ds=$('#ds');
+  if(e[4]==='stop'){ds.className='st st-prom';ds.textContent='Paid'}else if(e[4]==='hand'){ds.className='st st-paid';ds.textContent='With your team'}else if(e[4]==='cust'){ds.className='st st-prom';ds.textContent='Promised'}else{ds.className='st st-over';ds.textContent='Chasing'}
+  body.scrollTop=body.scrollHeight},500+i*1000));
+}
+/* 6 handoff */
+function rHand(m){
+ const ev=events('silent'),n=k=>ev.filter(e=>e[1]===k).length;
+ m.innerHTML=`<div class="handoff"><div class="hcard a" style="--i:0"><b>What triggers a handover</b><ul><li>• Day ${S.handoff} and still unpaid</li><li>• The customer disputes the invoice</li><li>• Angry or legal wording in a reply</li><li>• The customer asks to speak to a person</li></ul></div>
+ <div class="arrow a" style="--i:2">➜</div>
+ <div class="hcard a" style="--i:3"><b>Your accounts team receives</b><ul><li>• Marina Facilities LLC · AED 42,750</li><li>• ${n('E')+n('W')+n('S')} messages sent, ${n('P')} calls made</li><li>• Every reply and the call summaries</li><li>• A suggested next step</li></ul></div></div>
+ <p class="small" style="margin-top:12px">Messages stop the moment a person takes over, so a customer never hears from both.</p>
+ <div class="ctas a" style="--i:5"><a class="btn btn-primary" href="#contact">Book a pilot</a><a class="btn btn-line" href="#contact">Get a free invoice check</a></div>`;
+}
+go(0);
 })();
 </script>
 </body>
