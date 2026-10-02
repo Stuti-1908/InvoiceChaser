@@ -3,550 +3,750 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>InvoiceChaser — Get paid faster, without the chasing</title>
-<meta name="description" content="InvoiceChaser chases unpaid invoices for UAE businesses on WhatsApp, email and phone, in Arabic and English, and stops the moment a customer pays. Built for UAE e-invoicing.">
+<title>InvoiceChaser | Get paid faster in the UAE</title>
+<meta name="description" content="InvoiceChaser follows up on unpaid invoices for UAE businesses on WhatsApp, email and phone, in Arabic and English, and stops the moment your customer pays.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Onest:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #F5F3EE;
-  --surface: #FCFBF8;
-  --ink: #11262C;
-  --ink-soft: #4A5A5E;
-  --line: #DDD6C6;
-  --accent: #17706D;
-  --accent-soft: #D6ECEA;
-  --gold: #E9B44C;
-  --dark: #11262C;
-  --dark-ink: #F4F1EA;
-  --dark-soft: #B9CFCB;
-  --later: #7B8A8F;
-  --font: "DM Sans", "Segoe UI", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --radius: 14px;
+/*
+  Direction: the product is the hero. Real-looking UI (receivables board, WhatsApp thread,
+  call transcript) carries the page; copy stays short and plain around it.
+  Palette: deep gulf ink, cool off-white, emerald for action, date-gold for "paid".
+*/
+:root{
+  --ink:#0C2328; --ink-2:#163A41; --paper:#F6F8F7; --white:#FFFFFF;
+  --line:#DCE4E2; --muted:#56696D; --emerald:#0B8A6B; --emerald-2:#0A7259;
+  --mint:#DDF2EB; --gold:#D9A441; --gold-soft:#F7EBCF; --rose:#C8553D; --rose-soft:#F6DED7;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Onest", "Segoe UI", system-ui, sans-serif;
+  --arabic:"Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --r-sm:8px; --r-md:14px; --r-lg:22px;
+  --shadow:0 1px 0 rgba(12,35,40,.04), 0 24px 48px -24px rgba(12,35,40,.28);
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 17px; line-height: 1.6; }
-h1, h2, h3, p, ul, ol, figure { margin: 0; }
-a { color: var(--accent); }
-.wrap { max-width: 1160px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
-.narrow-wrap { max-width: 820px; }
-section { padding-block: clamp(56px, 8vw, 104px); }
-section > .wrap { display: flex; flex-direction: column; gap: 24px; }
-.band { background: var(--surface); }
-.dark { background: var(--dark); color: var(--dark-ink); }
-.dark .eyebrow { color: #5FC3BC; }
-.dark .lede, .dark .fine { color: var(--dark-soft); }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p,ul,ol,figure,blockquote{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+img,svg{max-width:100%}
+.wrap{max-width:1200px;margin-inline:auto;padding-inline:clamp(18px,4vw,40px)}
+.section{padding-block:clamp(72px,10vw,128px)}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(42px,5.2vw,68px);line-height:.98;font-weight:800}
+h2{font-size:clamp(32px,4.2vw,52px);line-height:1.05;font-weight:700}
+h3{font-size:clamp(21px,2vw,26px);line-height:1.15;font-weight:700}
+.lead{font-size:clamp(18px,1.6vw,21px);color:var(--muted);max-width:56ch}
+.small{font-size:14px;color:var(--muted)}
+.section-head{display:flex;flex-direction:column;gap:18px;max-width:760px;margin-bottom:clamp(40px,5vw,64px)}
+.section-head.center{margin-inline:auto;text-align:center;align-items:center}
+.kicker{font-weight:600;color:var(--emerald);font-size:16px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
 
-.eyebrow { font-family: var(--mono); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
-h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.05; letter-spacing: -.02em; text-wrap: balance; }
-h2 { font-size: clamp(28px, 3.6vw, 42px); line-height: 1.15; letter-spacing: -.01em; text-wrap: balance; max-width: 26ch; }
-h3 { font-size: 20px; line-height: 1.3; }
-.lede { font-size: 19px; color: var(--ink-soft); max-width: 62ch; }
-.narrow { max-width: 62ch; }
-.fine { font-size: 14px; color: var(--ink-soft); }
-.source { font-size: 13px; color: var(--ink-soft); }
-
-.btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; padding: 14px 22px; border-radius: 999px; border: 2px solid var(--accent); }
-.btn:hover { filter: brightness(1.08); }
-.btn-ghost { background: transparent; color: var(--accent); }
-.btn-small { padding: 8px 16px; font-size: 15px; color: #fff !important; }
-:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 16px/1 var(--body);padding:16px 24px;border-radius:999px;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:background .15s,border-color .15s}
+.btn-primary{background:var(--emerald);color:#fff}
+.btn-primary:hover{background:var(--emerald-2)}
+.btn-line{border-color:var(--ink);color:var(--ink);background:transparent}
+.btn-line:hover{background:var(--ink);color:#fff}
+.on-dark .btn-line{border-color:rgba(255,255,255,.5);color:#fff}
+.on-dark .btn-line:hover{background:#fff;color:var(--ink)}
 
 /* nav */
-.nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); text-decoration: none; font-size: 19px; }
-.brand-mark { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 9px; background: var(--accent); color: #fff; font-size: 14px; }
-.nav-links { display: flex; align-items: center; gap: 22px; }
-.nav-links a { color: var(--ink); text-decoration: none; font-size: 15px; }
-.nav-toggle { display: none; background: none; border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; font: inherit; color: var(--ink); }
-@media (max-width: 920px) {
-  .nav-toggle { display: block; }
-  .nav-links { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px clamp(16px,4vw,40px); background: var(--bg); border-bottom: 1px solid var(--line); }
-  .nav-links.open { display: flex; }
+.nav{position:sticky;top:0;z-index:50;background:rgba(246,248,247,.86);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 21px/1 var(--display);letter-spacing:-.02em}
+.logo-mark{width:32px;height:32px;border-radius:9px;background:var(--ink);position:relative;overflow:hidden}
+.logo-mark::before{content:"";position:absolute;inset:7px 7px 13px 7px;border-radius:3px;background:var(--emerald)}
+.logo-mark::after{content:"";position:absolute;left:7px;right:13px;bottom:7px;height:3px;border-radius:2px;background:var(--gold)}
+.menu{display:flex;align-items:center;gap:30px}
+.menu a{text-decoration:none;font-weight:500;font-size:15px;color:var(--ink-2)}
+.menu a:hover{color:var(--emerald)}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.nav-cta .btn{padding:12px 20px;font-size:15px}
+.burger{display:none;background:none;border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;font:600 14px var(--body);color:var(--ink);cursor:pointer}
+@media (max-width:980px){
+  .menu{display:none;position:absolute;top:72px;left:0;right:0;flex-direction:column;align-items:flex-start;gap:18px;padding:24px clamp(18px,4vw,40px) 28px;background:var(--paper);border-bottom:1px solid var(--line)}
+  .menu.open{display:flex}
+  .burger{display:block}
+  .nav-cta .btn-line{display:none}
 }
 
 /* hero */
-.hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
-.hero-copy { display: flex; flex-direction: column; gap: 22px; }
-.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
-.hero-visual { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.phone { width: min(360px, 100%); background: #E8E1D3; border-radius: 28px; padding: 18px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 30px 60px -30px rgba(17,38,44,.35); }
-.phone-top { display: flex; flex-direction: column; background: var(--dark); color: var(--dark-ink); border-radius: 14px; padding: 10px 14px; font-weight: 700; }
-.phone-top small { font-weight: 400; color: var(--dark-soft); }
-.bubble { padding: 10px 14px; border-radius: 14px; font-size: 15px; max-width: 88%; }
-.bubble.out { background: #fff; align-self: flex-start; color: var(--ink); }
-.bubble.in { background: #D3F2CE; align-self: flex-end; color: var(--ink); }
-.bubble.sys { background: var(--accent-soft); align-self: center; font-size: 13px; color: var(--ink); max-width: 100%; text-align: center; }
-.bubble.sys.ok { background: var(--gold); }
-.caption { font-size: 13px; color: var(--ink-soft); }
-@media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
+.hero{padding-block:clamp(48px,7vw,88px) clamp(64px,8vw,104px);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:clamp(36px,5vw,72px);align-items:center}
+.hero-copy{display:flex;flex-direction:column;gap:26px}
+.badge{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--line);border-radius:999px;padding:7px 14px 7px 8px;font-size:14px;font-weight:500;color:var(--ink-2)}
+.badge b{background:var(--gold-soft);color:#7A5512;border-radius:999px;padding:3px 10px;font-weight:600}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-points{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:15px;color:var(--muted)}
+.hero-points li{display:flex;align-items:center;gap:8px}
+.tick{width:18px;height:18px;border-radius:50%;background:var(--mint);display:inline-grid;place-items:center;flex:none}
+.tick::after{content:"";width:7px;height:4px;border-left:2px solid var(--emerald);border-bottom:2px solid var(--emerald);transform:rotate(-45deg) translate(1px,-1px)}
+
+/* product window */
+.stage{position:relative;padding:10px 0 40px 0}
+.app{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.app-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);background:#FBFCFB}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.app-title{font-weight:600;font-size:14px;color:var(--ink-2)}
+.app-body{padding:18px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.kpi{border:1px solid var(--line);border-radius:var(--r-sm);padding:12px}
+.kpi p{font-size:12px;color:var(--muted)}
+.kpi strong{display:block;font:700 18px/1.25 var(--display);white-space:nowrap;font-variant-numeric:tabular-nums}
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:1.4fr .9fr .9fr;gap:10px;align-items:center;padding:11px 4px;border-top:1px solid var(--line);font-size:14px}
+.row:first-child{border-top:0}
+.row .co{font-weight:600}
+.row .co small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.row .amt{font-variant-numeric:tabular-nums;text-align:right}
+.st{justify-self:end;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.st-over{background:var(--rose-soft);color:#8E3624}
+.st-prom{background:var(--mint);color:var(--emerald-2)}
+.st-paid{background:var(--gold-soft);color:#7A5512}
+.st-due{background:#E6ECEB;color:var(--ink-2)}
+.st-disp{background:#ECE4F3;color:#5B3D7A}
+.float{position:absolute;background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow);padding:14px 16px;font-size:14px}
+.float-wa{right:-14px;bottom:-6px;width:min(300px,78%);display:flex;flex-direction:column;gap:8px}
+.wa-head{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13px}
+.wa-dot{width:22px;height:22px;border-radius:50%;background:#25D366;display:grid;place-items:center}
+.wa-dot::after{content:"";width:9px;height:9px;border:2px solid #fff;border-radius:50%}
+.msg{background:#F0F4F3;border-radius:12px 12px 12px 4px;padding:9px 11px;font-size:13px;line-height:1.45}
+.msg.me{background:#DCF8C6;border-radius:12px 12px 4px 12px;align-self:flex-end}
+.msg.ar{font-family:var(--arabic);direction:rtl;text-align:right}
+.float-paid{left:-18px;bottom:6px;display:flex;align-items:center;gap:10px;font-weight:600}
+.coin{width:30px;height:30px;border-radius:50%;background:var(--gold);display:grid;place-items:center;color:var(--ink);font:800 14px var(--display)}
+@media (max-width:960px){.hero-grid{grid-template-columns:1fr}.float-paid{left:8px}.float-wa{right:8px}}
+@media (max-width:520px){.kpis{grid-template-columns:1fr 1fr}.kpi:last-child{display:none}.float-paid{display:none}.float-wa{position:static;width:100%;margin-top:14px}}
+
+/* load moment */
+@media (prefers-reduced-motion:no-preference){
+  .float-paid{animation:pop .5s 1.2s both cubic-bezier(.2,.9,.3,1.3)}
+  .float-wa .msg{animation:in .4s both}
+  .float-wa .msg:nth-of-type(2){animation-delay:.5s}.float-wa .msg:nth-of-type(3){animation-delay:.9s}
+  @keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+
+/* sectors */
+.sectors{border-block:1px solid var(--line);background:var(--white)}
+.sectors-in{display:flex;flex-wrap:wrap;align-items:center;gap:14px 36px;padding-block:26px}
+.sectors-in p{font-weight:600;color:var(--ink-2)}
+.sectors-in ul{display:flex;flex-wrap:wrap;gap:10px}
+.sectors-in li{border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:14px;color:var(--muted)}
 
 /* problem */
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.stat { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
-.num { font-size: clamp(40px, 5vw, 60px); font-weight: 700; color: var(--accent); line-height: 1.1; }
-.cost { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 16px; align-items: start; }
-.cost-line { font-size: clamp(24px, 3vw, 32px); font-weight: 700; line-height: 1.25; background: var(--gold); padding: 24px 28px; border-radius: var(--radius); }
-.cost-list { display: flex; flex-direction: column; gap: 12px; padding-left: 1.1em; }
-@media (max-width: 760px) { .stats, .cost { grid-template-columns: 1fr; } }
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--white);overflow:hidden}
+.fig{padding:clamp(24px,3vw,40px);border-left:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.fig:first-child{border-left:0}
+.fig strong{font:800 clamp(52px,6vw,80px)/1 var(--display);letter-spacing:-.03em;color:var(--ink)}
+.fig p{color:var(--muted);max-width:26ch}
+.cite{margin-top:16px}
+.loan{margin-top:clamp(40px,5vw,64px);display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(28px,4vw,56px);align-items:center}
+.loan blockquote{font:700 clamp(28px,3.4vw,42px)/1.12 var(--display);letter-spacing:-.02em}
+.loan ul{display:flex;flex-direction:column;gap:16px}
+.loan li{display:grid;grid-template-columns:22px 1fr;gap:12px;color:var(--ink-2)}
+.loan li .tick{margin-top:4px}
+@media (max-width:820px){.problem-grid{grid-template-columns:1fr}.fig{border-left:0;border-top:1px solid var(--line)}.fig:first-child{border-top:0}.loan{grid-template-columns:1fr}}
 
-/* steps & cards */
-.steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.steps li, .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: flex; flex-direction: column; gap: 10px; }
-.band .card { background: var(--bg); }
-.step-n { font-family: var(--mono); font-weight: 500; font-size: 15px; color: var(--accent); background: var(--accent-soft); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; }
-.cards.three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.tag { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
-.sub { margin-top: 24px; }
-@media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; } .cards.three { grid-template-columns: 1fr; } }
-@media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+/* features */
+.features{display:flex;flex-direction:column;gap:clamp(72px,9vw,120px)}
+.feature{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(32px,5vw,80px);align-items:center}
+.feature.flip .feature-copy{order:2}
+.feature-copy{display:flex;flex-direction:column;gap:18px}
+.feature-copy ul{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+.feature-copy li{display:grid;grid-template-columns:22px 1fr;gap:12px}
+.feature-copy li .tick{margin-top:4px}
+.panel{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:clamp(18px,2.4vw,28px)}
+@media (max-width:900px){.feature{grid-template-columns:1fr}.feature.flip .feature-copy{order:0}}
 
-/* tables */
-.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-.seq { width: 100%; border-collapse: collapse; min-width: 560px; font-variant-numeric: tabular-nums; }
-.seq th { background: var(--accent); color: #fff; text-align: left; padding: 12px 16px; font-size: 15px; }
-.seq td { padding: 12px 16px; border-top: 1px solid var(--line); font-size: 15px; }
-.seq tbody tr:nth-child(even) { background: var(--bg); }
+/* panel: channel ladder */
+.ladder{display:flex;flex-direction:column}
+.rung{display:grid;grid-template-columns:76px 1fr auto;gap:14px;align-items:center;padding:13px 0;border-top:1px dashed var(--line);font-size:15px}
+.rung:first-child{border-top:0}
+.rung .d{font:700 15px var(--display);color:var(--emerald);font-variant-numeric:tabular-nums}
+.ch{font-size:12px;font-weight:600;border-radius:999px;padding:4px 10px;background:#EEF2F1;color:var(--ink-2)}
+.rung.team .d{color:var(--gold)}
+.rung.team{font-weight:600}
+
+/* panel: call */
+.call{display:flex;flex-direction:column;gap:12px}
+.call-top{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:28px}
+.wave i{width:3px;border-radius:2px;background:var(--emerald);height:40%}
+@media (prefers-reduced-motion:no-preference){.wave i{animation:w 1s infinite ease-in-out}.wave i:nth-child(2n){animation-delay:.2s}.wave i:nth-child(3n){animation-delay:.4s}@keyframes w{50%{height:100%}}}
+.line{padding:10px 12px;border-radius:10px;font-size:14px;line-height:1.5}
+.line.bot{background:#F0F4F3}
+.line.cust{background:var(--mint);align-self:flex-end;max-width:85%}
+.line.ar{font-family:var(--arabic);direction:rtl;text-align:right}
+.outcome{display:flex;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px;font-size:14px}
+
+/* panel: reply sorter */
+.sorter{display:flex;flex-direction:column;gap:10px}
+.sort-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:15px}
+.sort-row q{quotes:"\201C" "\201D";color:var(--ink-2)}
+.sort-row .st{justify-self:end}
+
+/* how */
+.how{background:var(--ink);color:#EAF1EF}
+.how .lead{color:#A9C0BC}
+.how .kicker{color:#6FD3B7}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:s;border-top:1px solid rgba(255,255,255,.14)}
+.step{padding:28px 26px 0 0;display:flex;flex-direction:column;gap:12px;position:relative}
+.step::before{counter-increment:s;content:counter(s);font:800 54px/1 var(--display);color:#6FD3B7}
+.step p{color:#A9C0BC}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr;row-gap:36px}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
 
 /* demo */
-.demo { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); padding: clamp(16px, 3vw, 28px); display: flex; flex-direction: column; gap: 20px; }
-.demo-controls { display: flex; flex-wrap: wrap; gap: 10px; }
-.chip { font: inherit; font-size: 15px; padding: 10px 18px; border-radius: 999px; border: 2px solid var(--accent); background: var(--surface); color: var(--accent); cursor: pointer; }
-.chip[aria-pressed="true"] { background: var(--accent); color: #fff; }
-.demo-body { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
-.timeline { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; min-height: 120px; }
-.timeline li { display: grid; grid-template-columns: 92px 1fr; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; animation: rise .35s ease both; }
-.timeline .when { font-family: var(--mono); font-size: 13px; color: var(--accent); padding-top: 2px; }
-.timeline .what b { display: block; }
-.timeline li.hand { border-color: var(--gold); }
-.case-card { position: sticky; top: 80px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 8px; }
-.case-id { font-weight: 700; }
-.case-amt { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.pill { display: inline-block; padding: 3px 12px; border-radius: 999px; background: var(--accent-soft); font-weight: 700; font-size: 14px; }
-.pill.paid { background: var(--gold); }
-.pill.warn { background: #F3D2C6; }
-@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .timeline li { animation: none; } html { scroll-behavior: auto; } }
-@media (max-width: 820px) { .demo-body { grid-template-columns: 1fr; } .case-card { position: static; } }
+.demo{display:grid;grid-template-columns:280px 1fr;gap:0;background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.demo-side{background:#FBFCFB;border-right:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:12px}
+.demo-side p{font-weight:600}
+.choice{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;width:100%;font:500 15px var(--body);color:var(--ink);background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+.choice small{color:var(--muted);font-size:13px}
+.choice[aria-pressed="true"]{border-color:var(--emerald);background:var(--mint)}
+.demo-main{padding:24px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.case{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.case strong{font:700 22px var(--display);font-variant-numeric:tabular-nums}
+.feed{display:flex;flex-direction:column;gap:8px;min-height:340px}
+.ev{display:grid;grid-template-columns:72px 1fr;gap:14px;padding:12px 14px;border-radius:12px;background:#F6F8F7;font-size:15px}
+.ev .t{font:700 14px var(--display);color:var(--emerald);font-variant-numeric:tabular-nums}
+.ev b{display:block}
+.ev span{color:var(--muted)}
+.ev.hand{background:var(--gold-soft)}
+.ev.stop{background:var(--mint)}
+@media (prefers-reduced-motion:no-preference){.ev{animation:in .35s both}}
+.demo-note{font-size:14px;color:var(--muted)}
+@media (max-width:820px){.demo{grid-template-columns:1fr}.demo-side{border-right:0;border-bottom:1px solid var(--line)}}
 
-/* platform */
-.diagram { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(16px, 3vw, 32px); display: flex; flex-direction: column; gap: 10px; }
-.layer { display: flex; flex-wrap: wrap; gap: 12px; }
-.node { flex: 1 1 150px; padding: 14px 16px; border-radius: 10px; background: var(--bg); font-weight: 500; font-size: 15px; }
-.node.live { border: 2px solid var(--accent); }
-.node.next { border: 2px dashed var(--accent); }
-.node.later { border: 2px dotted var(--later); color: var(--ink-soft); }
-.node.core { background: var(--dark); color: var(--dark-ink); font-weight: 700; }
-.node.gate { background: var(--gold); font-weight: 700; }
-.arrow { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); padding-left: 8px; }
-.diagram figcaption { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 8px; font-size: 14px; color: var(--ink-soft); }
-.key::before { content: ""; display: inline-block; width: 26px; height: 14px; border-radius: 3px; margin-right: 8px; vertical-align: -2px; }
-.key.live::before { border: 2px solid var(--accent); }
-.key.next::before { border: 2px dashed var(--accent); }
-.key.later::before { border: 2px dotted var(--later); }
+/* integrations */
+.hub{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.tile{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:20px;display:flex;flex-direction:column;gap:8px}
+.tile .ic{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font:800 15px var(--display);color:#fff}
+.tile b{font-size:16px}
+.tile span{font-size:13px;color:var(--muted)}
+.soon{align-self:flex-start;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:#EEF2F1;color:var(--muted)}
+.live{background:var(--mint);color:var(--emerald-2)}
+@media (max-width:860px){.hub{grid-template-columns:1fr 1fr}}
 
 /* trust */
-.trust-grid, .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-.trust-grid > div, .contact-grid > div { display: flex; flex-direction: column; gap: 20px; }
-.checks { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 14px; }
-.checks li { padding-left: 34px; position: relative; color: var(--dark-ink); }
-.checks li::before { content: "✓"; position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 50%; background: #5FC3BC; color: var(--dark); display: grid; place-items: center; font-size: 13px; font-weight: 700; }
-@media (max-width: 820px) { .trust-grid, .contact-grid { grid-template-columns: 1fr; } }
+.trust{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(32px,5vw,80px);align-items:start}
+.gate{background:var(--ink);color:#EAF1EF;border-radius:var(--r-lg);padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:14px}
+.gate-msg{background:rgba(255,255,255,.07);border-radius:12px;padding:14px;font-size:14px}
+.checklist{display:flex;flex-direction:column;gap:8px}
+.check{display:flex;justify-content:space-between;gap:12px;font-size:15px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.check em{font-style:normal;color:#6FD3B7;font-weight:600}
+.check.hold em{color:var(--gold)}
+.gate-foot{font-size:14px;color:#A9C0BC}
+@media (max-width:900px){.trust{grid-template-columns:1fr}}
+
+/* timeline */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.tl::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--line)}
+.tl-item{position:relative;padding:34px 22px 0 0;display:flex;flex-direction:column;gap:6px}
+.tl-item::before{content:"";position:absolute;top:2px;left:0;width:16px;height:16px;border-radius:50%;background:var(--paper);border:3px solid var(--emerald)}
+.tl-item.sme::before{background:var(--gold);border-color:var(--gold)}
+.tl-item b{font:700 20px var(--display)}
+.tl-item span{color:var(--muted);font-size:15px}
+@media (max-width:820px){.tl{grid-template-columns:1fr 1fr;row-gap:28px}.tl::before{display:none}}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.plan{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:30px;display:flex;flex-direction:column;gap:16px}
+.plan.pick{border:2px solid var(--emerald);box-shadow:var(--shadow)}
+.plan .price{font:800 40px/1 var(--display);letter-spacing:-.02em}
+.plan .price small{font:500 15px var(--body);color:var(--muted);letter-spacing:0}
+.plan ul{display:flex;flex-direction:column;gap:10px;font-size:15px;flex:1}
+.plan li{display:grid;grid-template-columns:22px 1fr;gap:10px}
+.plan li .tick{margin-top:3px}
+.plan .btn{width:100%}
+.ribbon{align-self:flex-start;font-size:12px;font-weight:600;background:var(--emerald);color:#fff;border-radius:999px;padding:4px 10px}
+@media (max-width:900px){.plans{grid-template-columns:1fr}}
+
+/* partners */
+.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--white)}
+.way{padding:clamp(24px,3vw,36px);border-left:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+.way:first-child{border-left:0}
+.way .who{font-weight:600;color:var(--emerald)}
+.way p{color:var(--muted)}
+.way a{margin-top:auto;font-weight:600;color:var(--ink);text-underline-offset:4px}
+@media (max-width:860px){.ways{grid-template-columns:1fr}.way{border-left:0;border-top:1px solid var(--line)}.way:first-child{border-top:0}}
 
 /* faq */
-details { border-bottom: 1px solid var(--line); padding-block: 16px; }
-summary { cursor: pointer; font-weight: 700; font-size: 18px; }
-details p { margin-top: 10px; color: var(--ink-soft); max-width: 65ch; }
+.faq{display:grid;grid-template-columns:1fr 1.6fr;gap:clamp(32px,5vw,80px)}
+.faq details{border-top:1px solid var(--line);padding:20px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;font:700 19px var(--display);list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-weight:500;color:var(--emerald);font-size:24px;line-height:1}
+.faq details[open] summary::after{content:"\2212"}
+.faq details p{margin-top:10px;color:var(--muted);max-width:62ch}
+@media (max-width:860px){.faq{grid-template-columns:1fr}}
 
-/* contact */
-.contact-box { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.15); border-radius: var(--radius); padding: 28px; gap: 6px !important; }
-.label { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--dark-soft); }
-.contact-val { font-size: 20px; font-weight: 700; margin-bottom: 12px; user-select: all; }
-.contact-val a { color: var(--dark-ink); }
+/* cta */
+.cta{background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:clamp(36px,6vw,72px);display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+.cta::after{content:"";position:absolute;right:-80px;bottom:-120px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(217,164,65,.35),transparent 70%)}
+.cta .lead{color:#A9C0BC}
+.cta-copy{display:flex;flex-direction:column;gap:18px;position:relative;z-index:1}
+.cta-box{position:relative;z-index:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-md);padding:24px;display:flex;flex-direction:column;gap:14px}
+.cta-box label{font-size:13px;color:#A9C0BC}
+.cta-box .val{font:600 18px var(--body);user-select:all;word-break:break-all}
+.copy{align-self:flex-start;font:600 14px var(--body);background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4);border-radius:999px;padding:8px 14px;cursor:pointer}
+@media (max-width:860px){.cta{grid-template-columns:1fr}}
 
-.footer { border-top: 1px solid var(--line); padding-block: 28px; }
-.footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+/* footer */
+footer{padding-block:56px 40px}
+.foot{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px}
+.foot h4{font:700 15px var(--display);margin-bottom:12px}
+.foot ul{display:flex;flex-direction:column;gap:8px;font-size:15px}
+.foot a{text-decoration:none;color:var(--muted)}
+.foot a:hover{color:var(--emerald)}
+.foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-top:1px solid var(--line);margin-top:40px;padding-top:22px;font-size:14px;color:var(--muted)}
+@media (max-width:760px){.foot{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 
-<header class="nav" id="top">
-  <div class="wrap nav-inner">
-    <a class="brand" href="#top" aria-label="InvoiceChaser home">
-      <span class="brand-mark" aria-hidden="true">IC</span>InvoiceChaser
-    </a>
-    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menu</button>
-    <nav id="nav-links" class="nav-links">
-      <a href="#problem">Why it matters</a>
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"></span>InvoiceChaser</a>
+    <nav class="menu" id="menu" aria-label="Main">
+      <a href="#product">Product</a>
       <a href="#how">How it works</a>
       <a href="#demo">Demo</a>
-      <a href="#platform">Platform</a>
-      <a href="#trust">Trust</a>
+      <a href="#trust">Security</a>
+      <a href="#pricing">Pricing</a>
       <a href="#partners">Partners</a>
-      <a href="#faq">FAQ</a>
-      <a class="btn btn-small" href="#contact">Book a pilot</a>
     </nav>
+    <div class="nav-cta">
+      <a class="btn btn-line" href="#demo">See the demo</a>
+      <a class="btn btn-primary" href="#contact">Book a pilot</a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="menu">Menu</button>
+    </div>
   </div>
 </header>
 
-<main>
+<main id="top">
 
 <!-- HERO -->
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow">Collections for UAE businesses</p>
-      <h1>Get paid faster, without the chasing.</h1>
-      <p class="lede">InvoiceChaser reminds your customers about unpaid invoices on WhatsApp, email and phone, in Arabic and English. It stops the moment they pay, and hands anything difficult to your own team.</p>
-      <div class="hero-cta">
-        <a class="btn" href="#contact">Get a free unpaid-invoice check</a>
-        <a class="btn btn-ghost" href="#demo">See it work</a>
+      <span class="badge"><b>New</b> Built for UAE e-invoicing, 2027</span>
+      <h1>Get paid faster. Stop chasing.</h1>
+      <p class="lead">InvoiceChaser follows up on every unpaid invoice for you, on WhatsApp, email and phone, in Arabic and English. It stops the moment your customer pays.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">Get a free invoice check</a>
+        <a class="btn btn-line" href="#demo">Watch it work</a>
       </div>
-      <p class="fine">Ready for UAE e-invoicing. You approve every message template before anything is sent.</p>
+      <ul class="hero-points">
+        <li><span class="tick"></span>You approve every message</li>
+        <li><span class="tick"></span>Stops automatically on payment</li>
+        <li><span class="tick"></span>Disputes go to your team</li>
+      </ul>
     </div>
-    <div class="hero-visual" aria-hidden="true">
-      <div class="phone">
-        <div class="phone-top"><span>Al Noor Trading</span><small>WhatsApp Business</small></div>
-        <div class="bubble out">Hi Omar, a friendly reminder that invoice <b>INV-2041</b> for <b>AED 18,400</b> is due today. You can pay here: <u>pay.example/2041</u></div>
-        <div class="bubble in">Thanks, we'll pay on the 20th.</div>
-        <div class="bubble sys">Status changed: <b>Promised · 20 Oct</b>. Reminders paused.</div>
-        <div class="bubble sys ok">Payment received. Chasing stopped.</div>
+
+    <div class="stage" aria-label="Example of the InvoiceChaser receivables board, with fictional data">
+      <div class="app">
+        <div class="app-bar"><div class="dots"><i></i><i></i><i></i></div><span class="app-title">Receivables · Al Noor Trading</span><span class="small">Demo data</span></div>
+        <div class="app-body">
+          <div class="kpis">
+            <div class="kpi"><p>Overdue</p><strong>AED 214,600</strong></div>
+            <div class="kpi"><p>Promised this week</p><strong>AED 61,200</strong></div>
+            <div class="kpi"><p>Collected this month</p><strong>AED 148,900</strong></div>
+          </div>
+          <div class="rows">
+            <div class="row"><span class="co">Gulf Star Contracting<small>INV-2041 · 8 days late</small></span><span class="amt">18,400</span><span class="st st-prom">Promised 20 Oct</span></div>
+            <div class="row"><span class="co">Marina Facilities LLC<small>INV-2033 · 21 days late</small></span><span class="amt">42,750</span><span class="st st-over">Call scheduled</span></div>
+            <div class="row"><span class="co">Desert Rose Logistics<small>INV-2050 · due today</small></span><span class="amt">9,120</span><span class="st st-due">Reminder sent</span></div>
+            <div class="row"><span class="co">Palm Line Supplies<small>INV-2018</small></span><span class="amt">27,300</span><span class="st st-paid">Paid</span></div>
+            <div class="row"><span class="co">Creek Side Interiors<small>INV-2027</small></span><span class="amt">13,980</span><span class="st st-disp">With your team</span></div>
+          </div>
+        </div>
       </div>
-      <p class="caption">Example with a fictional company</p>
+
+      <div class="float float-paid" aria-hidden="true"><span class="coin">د.إ</span>AED 27,300 received · chasing stopped</div>
+
+      <div class="float float-wa" aria-hidden="true">
+        <div class="wa-head"><span class="wa-dot"></span>WhatsApp · Gulf Star Contracting</div>
+        <p class="msg ar">مرحباً عمر، تذكير ودّي بأن الفاتورة INV-2041 بقيمة 18,400 درهم مستحقة اليوم.</p>
+        <p class="msg me">Thanks, we'll pay on the 20th.</p>
+        <p class="msg">Noted. We'll pause reminders until then.</p>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- SECTORS -->
+<div class="sectors">
+  <div class="wrap sectors-in">
+    <p>Made for UAE businesses that sell on credit</p>
+    <ul>
+      <li>Trading and distribution</li><li>Facilities management</li><li>Construction subcontractors</li><li>Logistics</li><li>Agencies and services</li>
+    </ul>
+  </div>
+</div>
+
 <!-- PROBLEM -->
-<section id="problem" class="band">
+<section class="section" id="why">
   <div class="wrap">
-    <p class="eyebrow">Why it matters</p>
-    <h2>Late payment is normal in UAE B2B, and it costs more than it looks.</h2>
-    <div class="stats">
-      <div class="stat"><p class="num">2 in 5</p><p>B2B invoices in the UAE are paid late</p></div>
-      <div class="stat"><p class="num">47%</p><p>of B2B sales are made on credit, on average</p></div>
-      <div class="stat"><p class="num">49%</p><p>of delays are blamed on customers' own cash-flow problems</p></div>
+    <div class="section-head">
+      <p class="kicker">Why it matters</p>
+      <h2>In the UAE, late payment is the normal case.</h2>
+      <p class="lead">Selling on credit wins customers. Waiting to be paid drains cash, time and your team's patience.</p>
     </div>
-    <p class="source">Source: Atradius Payment Practices Barometer, UAE, survey conducted Q2 2026.</p>
-    <div class="cost">
-      <p class="cost-line">Every late invoice is an interest-free loan to your customer.</p>
-      <ul class="cost-list">
-        <li><b>Cash is stuck</b> while you still pay salaries, rent and suppliers.</li>
-        <li><b>Someone on your team</b> spends hours a week sending reminders and making awkward calls.</li>
-        <li><b>Follow-ups get forgotten</b> when things are busy, so the oldest invoices get the least attention.</li>
+    <div class="problem-grid">
+      <div class="fig"><strong>2 in 5</strong><p>B2B invoices in the UAE are paid late</p></div>
+      <div class="fig"><strong>47%</strong><p>of B2B sales are made on credit, on average</p></div>
+      <div class="fig"><strong>49%</strong><p>of delays come from customers' own cash-flow problems</p></div>
+    </div>
+    <p class="small cite">Source: Atradius Payment Practices Barometer, UAE, survey conducted in Q2 2026.</p>
+
+    <div class="loan">
+      <blockquote>Every late invoice is an interest-free loan to your customer.</blockquote>
+      <ul>
+        <li><span class="tick"></span><span>Cash you have earned sits in someone else's account while you pay salaries, rent and suppliers.</span></li>
+        <li><span class="tick"></span><span>Someone on your team loses hours every week to reminders and awkward calls.</span></li>
+        <li><span class="tick"></span><span>When things get busy, the oldest invoices get the least attention.</span></li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section id="how">
+<!-- FEATURES -->
+<section class="section" id="product" style="padding-top:0">
   <div class="wrap">
-    <p class="eyebrow">How it works</p>
-    <h2>Four steps, and your team only handles the exceptions.</h2>
-    <ol class="steps">
-      <li><span class="step-n">1</span><h3>Connect</h3><p>Link your accounting software or upload a spreadsheet of invoices and customer contacts.</p></li>
-      <li><span class="step-n">2</span><h3>Watch</h3><p>InvoiceChaser sees what is coming due and what is already overdue, invoice by invoice.</p></li>
-      <li><span class="step-n">3</span><h3>Chase</h3><p>Polite reminders go out on WhatsApp, email and phone, in the right order, at the right time.</p></li>
-      <li><span class="step-n">4</span><h3>Stop</h3><p>The moment a payment arrives, reminders stop. Replies pause the chase and reach the right person.</p></li>
-    </ol>
-
-    <h3 class="sub">A default sequence, timed to the due date</h3>
-    <div class="table-scroll">
-      <table class="seq">
-        <thead><tr><th>When</th><th>Channel</th><th>What happens</th></tr></thead>
-        <tbody>
-          <tr><td>7 days before due</td><td>Email + WhatsApp</td><td>Friendly heads-up with a pay link</td></tr>
-          <tr><td>Due date</td><td>WhatsApp</td><td>Due today, one-tap pay link</td></tr>
-          <tr><td>+3 days</td><td>Email</td><td>Polite notice; asks what is blocking payment</td></tr>
-          <tr><td>+7 days</td><td>WhatsApp</td><td>Amount and pay link; offer to speak</td></tr>
-          <tr><td>+12 days</td><td>Phone call</td><td>Confirms receipt, records a promised date</td></tr>
-          <tr><td>+18 days</td><td>WhatsApp</td><td>Follows up on the call or promise</td></tr>
-          <tr><td>+25 days</td><td>Phone call</td><td>Second call; asks for the finance contact if needed</td></tr>
-          <tr><td>+30 days</td><td>Your team</td><td>Full history handed to your own staff</td></tr>
-        </tbody>
-      </table>
+    <div class="section-head">
+      <p class="kicker">Product</p>
+      <h2>A collections team that never forgets, never gets tired, and never loses its temper.</h2>
     </div>
-    <p class="fine">Every step can be changed for each customer group. Good payers get one gentle nudge; slow payers get more attention.</p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-copy">
+          <h3>Reminders in the right order, at the right time</h3>
+          <p class="lead">The schedule is set from each invoice's due date. Good payers get one gentle nudge. Slow payers get more attention, with a phone call when a message isn't enough.</p>
+          <ul>
+            <li><span class="tick"></span><span>WhatsApp first, because that's what your customers read</span></li>
+            <li><span class="tick"></span><span>Change the steps for each customer group</span></li>
+            <li><span class="tick"></span><span>Your own team takes over at day 30 with the full history</span></li>
+          </ul>
+        </div>
+        <div class="panel" aria-label="Default reminder schedule">
+          <div class="ladder">
+            <div class="rung"><span class="d">−7 days</span><span>Friendly heads-up with pay link</span><span class="ch">Email + WhatsApp</span></div>
+            <div class="rung"><span class="d">Due</span><span>One-tap pay link</span><span class="ch">WhatsApp</span></div>
+            <div class="rung"><span class="d">+3</span><span>Asks what is blocking payment</span><span class="ch">Email</span></div>
+            <div class="rung"><span class="d">+7</span><span>Amount, link and offer to talk</span><span class="ch">WhatsApp</span></div>
+            <div class="rung"><span class="d">+12</span><span>Confirms receipt, records a date</span><span class="ch">Phone</span></div>
+            <div class="rung"><span class="d">+25</span><span>Follows up on the promise</span><span class="ch">Phone</span></div>
+            <div class="rung team"><span class="d">+30</span><span>Handed to your team</span><span class="ch">Your staff</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="feature-copy">
+          <h3>Phone calls in Arabic and English</h3>
+          <p class="lead">When a message isn't enough, an assistant calls. It says who it is, confirms the invoice arrived and asks when payment is planned. Every call is recorded and summarised.</p>
+          <ul>
+            <li><span class="tick"></span><span>Introduces itself as an automated assistant on every call</span></li>
+            <li><span class="tick"></span><span>Calls only during business hours, never at prayer times</span></li>
+            <li><span class="tick"></span><span>Writes the promised date straight onto the invoice</span></li>
+          </ul>
+        </div>
+        <div class="panel call" aria-label="Example call transcript, fictional">
+          <div class="call-top"><span>Call · Marina Facilities LLC</span><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+          <p class="line bot ar">السلام عليكم، معك المساعد الآلي من شركة النور للتجارة بخصوص الفاتورة رقم 2033.</p>
+          <p class="line cust">Yes, we received it. Finance will release it next Tuesday.</p>
+          <p class="line bot">Thank you. I'll note Tuesday the 14th and send the payment link on WhatsApp.</p>
+          <div class="outcome"><span class="st st-prom">Promised 14 Oct</span><span class="small">Summary saved · link sent</span></div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-copy">
+          <h3>It reads replies and does the sensible thing</h3>
+          <p class="lead">Customers answer in their own words. InvoiceChaser understands what they mean and changes course, so nobody gets chased after paying or while a problem is being sorted out.</p>
+          <ul>
+            <li><span class="tick"></span><span>"Already paid" checks your books before anything else is sent</span></li>
+            <li><span class="tick"></span><span>A promised date pauses reminders until then</span></li>
+            <li><span class="tick"></span><span>Disputes stop the chase and go to a person</span></li>
+          </ul>
+        </div>
+        <div class="panel sorter" aria-label="Examples of customer replies and what happens">
+          <div class="sort-row"><q>We'll pay on the 20th</q><span class="st st-prom">Paused until 21st</span></div>
+          <div class="sort-row"><q>Paid yesterday, please check</q><span class="st st-due">Checking payment</span></div>
+          <div class="sort-row"><q>We only received 40 units, not 50</q><span class="st st-disp">Sent to your team</span></div>
+          <div class="sort-row"><q>Please contact our accounts team instead</q><span class="st st-due">Contact updated</span></div>
+          <div class="sort-row"><q>STOP</q><span class="st st-over">Opted out</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="section how on-dark" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">How it works</p>
+      <h2>Live in days. Your team only handles the exceptions.</h2>
+    </div>
+    <ol class="steps">
+      <li class="step"><h3>Connect</h3><p>Link your accounting software or upload a spreadsheet of invoices and contacts.</p></li>
+      <li class="step"><h3>Approve</h3><p>Review the message templates and schedule. Nothing goes out until you say so.</p></li>
+      <li class="step"><h3>Chase</h3><p>Reminders go out on WhatsApp, email and phone, timed to each due date.</p></li>
+      <li class="step"><h3>Get paid</h3><p>Payments stop the chase. Disputes and stubborn cases come to your team.</p></li>
+    </ol>
   </div>
 </section>
 
 <!-- DEMO -->
-<section id="demo" class="band">
+<section class="section" id="demo">
   <div class="wrap">
-    <p class="eyebrow">Interactive demo</p>
-    <h2>Watch one invoice move through the system.</h2>
-    <p class="lede narrow">This walkthrough uses a fictional company, Al Noor Trading, and fictional customers. Pick what the customer does and see how InvoiceChaser responds.</p>
-
+    <div class="section-head">
+      <p class="kicker">Interactive demo</p>
+      <h2>Pick what your customer does. Watch what happens.</h2>
+      <p class="lead">One invoice, four possible endings. The company and customers here are fictional.</p>
+    </div>
     <div class="demo">
-      <div class="demo-controls" role="group" aria-label="Choose what the customer does">
-        <button class="chip" data-scenario="pays">Customer pays</button>
-        <button class="chip" data-scenario="promise">Promises a date</button>
-        <button class="chip" data-scenario="dispute">Disputes the invoice</button>
-        <button class="chip" data-scenario="silent">Doesn't reply</button>
+      <div class="demo-side" role="group" aria-label="Choose what the customer does">
+        <p>The customer…</p>
+        <button class="choice" data-s="pays">Pays after a reminder<small>The most common case</small></button>
+        <button class="choice" data-s="promise">Promises a date<small>And keeps the promise</small></button>
+        <button class="choice" data-s="dispute">Disputes the invoice<small>Says the quantity is wrong</small></button>
+        <button class="choice" data-s="silent">Doesn't reply<small>For 30 days</small></button>
       </div>
-      <div class="demo-body">
-        <ol class="timeline" id="timeline" aria-live="polite"></ol>
-        <aside class="case-card" aria-label="Case status">
-          <p class="eyebrow">Case</p>
-          <p class="case-id">INV-2041 · Gulf Star Contracting</p>
-          <p class="case-amt">AED 18,400</p>
-          <p class="case-state">Status: <span id="caseState" class="pill">Upcoming</span></p>
-          <p class="fine" id="caseNote">Choose a scenario to start.</p>
-        </aside>
+      <div class="demo-main">
+        <div class="case">
+          <div><p class="small">INV-2041 · Gulf Star Contracting</p><strong>AED 18,400</strong></div>
+          <span class="st st-due" id="state">Upcoming</span>
+        </div>
+        <ol class="feed" id="feed" aria-live="polite"></ol>
+        <p class="demo-note" id="note"></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PLATFORM -->
-<section id="platform">
+<!-- INTEGRATIONS -->
+<section class="section" id="integrations" style="padding-top:0">
   <div class="wrap">
-    <p class="eyebrow">Platform</p>
-    <h2>One platform, with more agents over time.</h2>
-    <p class="lede narrow">Collections is the first agent. Every agent after it reuses the same case records, rules check, channels and audit log.</p>
-
-    <figure class="diagram">
-      <div class="layer">
-        <span class="node live">Accounting software</span>
-        <span class="node next">E-invoice feeds</span>
-        <span class="node live">Spreadsheet upload</span>
-        <span class="node next">Payments</span>
-      </div>
-      <div class="arrow" aria-hidden="true">↓ normalised into cases</div>
-      <div class="layer"><span class="node core">Case records: what is owed or missing, from whom, and what already happened</span></div>
-      <div class="arrow" aria-hidden="true">↓ what is due next</div>
-      <div class="layer">
-        <span class="node live">Collections</span>
-        <span class="node live">Documents</span>
-        <span class="node next">Disputes</span>
-        <span class="node later">Reconciliation</span>
-        <span class="node later">Forecast</span>
-      </div>
-      <div class="arrow" aria-hidden="true">↓ proposed message or call</div>
-      <div class="layer"><span class="node gate">Rules check on every message: consent, quiet hours, frequency limits, call disclosure</span></div>
-      <div class="arrow" aria-hidden="true">↓ approved actions only</div>
-      <div class="layer">
-        <span class="node live">WhatsApp</span>
-        <span class="node live">Email</span>
-        <span class="node live">Phone</span>
-        <span class="node live">SMS</span>
-      </div>
-      <div class="arrow" aria-hidden="true">↺ replies update the case · disputes and day-30 cases go to your team · everything is logged</div>
-      <figcaption>
-        <span class="key live">Live</span>
-        <span class="key next">Next</span>
-        <span class="key later">Added when customers ask</span>
-      </figcaption>
-    </figure>
+    <div class="section-head">
+      <p class="kicker">Connections</p>
+      <h2>Works with the tools you already use.</h2>
+      <p class="lead">Your invoices stay where they are. InvoiceChaser reads them, and payments flow back so the chase stops on its own.</p>
+    </div>
+    <div class="hub">
+      <div class="tile"><span class="ic" style="background:#2CA01C">QB</span><b>QuickBooks</b><span>Invoices, contacts, payments</span><em class="soon live">Available</em></div>
+      <div class="tile"><span class="ic" style="background:#1D6F42">XL</span><b>Excel and CSV</b><span>Upload any invoice list</span><em class="soon live">Available</em></div>
+      <div class="tile"><span class="ic" style="background:#25D366">WA</span><b>WhatsApp Business</b><span>Messages and replies</span><em class="soon live">Available</em></div>
+      <div class="tile"><span class="ic" style="background:#0C2328">@</span><b>Email and SMS</b><span>Notices and fallback</span><em class="soon live">Available</em></div>
+      <div class="tile"><span class="ic" style="background:#E42527">Z</span><b>Zoho Books</b><span>Invoices and payments</span><em class="soon">Coming soon</em></div>
+      <div class="tile"><span class="ic" style="background:#13B5EA">X</span><b>Xero</b><span>Invoices and payments</span><em class="soon">Coming soon</em></div>
+      <div class="tile"><span class="ic" style="background:#0B8A6B">e</span><b>E-invoice feeds</b><span>From accredited providers</span><em class="soon">Coming soon</em></div>
+      <div class="tile"><span class="ic" style="background:#D9A441;color:#0C2328">د.إ</span><b>Payment links</b><span>Card and bank transfer</span><em class="soon">Coming soon</em></div>
+    </div>
   </div>
 </section>
 
 <!-- TRUST -->
-<section id="trust" class="band dark">
-  <div class="wrap trust-grid">
-    <div>
-      <p class="eyebrow">Trust</p>
-      <h2>Your customers are your relationships. The system is built to protect them.</h2>
-      <p class="lede">No agent can send a message on its own. Every message and call passes a rules check first, and every decision is written to a log.</p>
+<section class="section" id="trust" style="background:var(--white);border-block:1px solid var(--line)">
+  <div class="wrap trust">
+    <div class="section-head" style="margin:0">
+      <p class="kicker">Security and control</p>
+      <h2>Your customers are your relationships. Every message is checked first.</h2>
+      <p class="lead">Nothing reaches a customer without passing a rules check, and every decision is written to a log you can show your auditor.</p>
     </div>
-    <ul class="checks">
-      <li><b>Stops when paid.</b> Payments sync back, so nobody is chased after paying.</li>
-      <li><b>Listens to replies.</b> "Already paid", "I'll pay on the 20th" or "this invoice is wrong" pause the chase.</li>
-      <li><b>Consent and opt-outs</b> respected on every channel, in English and Arabic.</li>
-      <li><b>Quiet hours,</b> Friday prayers and public holidays respected.</li>
-      <li><b>Calls say who is calling</b> and that it is an automated assistant.</li>
-      <li><b>You approve templates</b> before anything is sent.</li>
-      <li><b>A full audit log</b> of every contact, ready for your auditor.</li>
-    </ul>
+    <div class="gate" aria-label="Example rules check before sending">
+      <div class="gate-msg"><b>Ready to send:</b> WhatsApp reminder to Desert Rose Logistics, Friday 12:40</div>
+      <div class="checklist">
+        <div class="check"><span>Customer has not opted out</span><em>Pass</em></div>
+        <div class="check"><span>Invoice is still unpaid</span><em>Pass</em></div>
+        <div class="check"><span>No open dispute</span><em>Pass</em></div>
+        <div class="check"><span>Under the weekly contact limit</span><em>Pass</em></div>
+        <div class="check hold"><span>Outside Friday prayer time</span><em>Held until 14:00</em></div>
+      </div>
+      <p class="gate-foot">Decision logged with the rule that applied. Your template, your company name, your approval.</p>
+    </div>
   </div>
 </section>
 
-<!-- TIMING -->
-<section id="einvoicing">
+<!-- E-INVOICING -->
+<section class="section" id="einvoicing">
   <div class="wrap">
-    <p class="eyebrow">Why now</p>
-    <h2>UAE e-invoicing turns every invoice into structured data.</h2>
-    <div class="table-scroll">
-      <table class="seq">
-        <thead><tr><th>Date</th><th>Who</th><th>What</th></tr></thead>
-        <tbody>
-          <tr><td>30 Oct 2026</td><td>Revenue of AED 50m or more</td><td>Appoint an accredited service provider</td></tr>
-          <tr><td>1 Jan 2027</td><td>Revenue of AED 50m or more</td><td>E-invoicing mandatory</td></tr>
-          <tr><td>31 Mar 2027</td><td>All other in-scope businesses</td><td>Appoint an accredited service provider</td></tr>
-          <tr><td>1 Jul 2027</td><td>All other in-scope businesses</td><td>E-invoicing mandatory</td></tr>
-        </tbody>
-      </table>
+    <div class="section-head">
+      <p class="kicker">Why now</p>
+      <h2>E-invoicing is coming. Your invoices are about to become data.</h2>
+      <p class="lead">UAE e-invoicing turns every invoice into structured information the moment it is issued. InvoiceChaser is being built to start following up from that point, with no uploads.</p>
     </div>
-    <p class="fine">InvoiceChaser is designed to work from this structured data, so chasing can start as soon as an invoice is issued. Dates as published by advisers in September 2026; always confirm with the UAE Ministry of Finance and the Federal Tax Authority.</p>
+    <div class="tl">
+      <div class="tl-item"><b>30 Oct 2026</b><span>Businesses with AED 50m+ revenue appoint a provider</span></div>
+      <div class="tl-item"><b>1 Jan 2027</b><span>E-invoicing mandatory for AED 50m+ revenue</span></div>
+      <div class="tl-item sme"><b>31 Mar 2027</b><span>All other in-scope businesses appoint a provider</span></div>
+      <div class="tl-item sme"><b>1 Jul 2027</b><span>E-invoicing mandatory for all other in-scope businesses</span></div>
+    </div>
+    <p class="small cite">Dates as published by UAE tax advisers in September 2026. Confirm with the Ministry of Finance and the Federal Tax Authority.</p>
   </div>
 </section>
 
-<!-- PILOT -->
-<section id="pilot" class="band">
+<!-- PRICING -->
+<section class="section" id="pricing" style="padding-top:0">
   <div class="wrap">
-    <p class="eyebrow">Start small</p>
-    <h2>A 30 to 45 day pilot, judged on cash.</h2>
-    <div class="cards three">
-      <div class="card"><span class="step-n">1</span><h3>Free unpaid-invoice check</h3><p>Send your list of unpaid invoices. Within 48 hours we show where cash is stuck and what we would chase first.</p></div>
-      <div class="card"><span class="step-n">2</span><h3>Pilot on real invoices</h3><p>We chase a slice of your overdue invoices. You approve every message template first.</p></div>
-      <div class="card"><span class="step-n">3</span><h3>Review the results</h3><p>Days-to-pay before and after, amount recovered, promises kept, and any customer complaints.</p></div>
+    <div class="section-head center">
+      <p class="kicker">Pricing</p>
+      <h2>Start with a free check. Pay monthly after the pilot.</h2>
+      <p class="lead">Every plan starts with a free review of your unpaid invoices and a 30 to 45 day pilot judged on cash collected.</p>
     </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Starter</h3>
+        <p class="price">AED 399<small> / month</small></p>
+        <p class="small">For small teams with a steady flow of invoices.</p>
+        <ul>
+          <li><span class="tick"></span>Up to 150 open invoices</li>
+          <li><span class="tick"></span>WhatsApp and email reminders</li>
+          <li><span class="tick"></span>One accounting connection</li>
+          <li><span class="tick"></span>Reply handling and auto-stop on payment</li>
+        </ul>
+        <a class="btn btn-line" href="#contact">Start with a free check</a>
+      </div>
+      <div class="plan pick">
+        <span class="ribbon">Most popular</span>
+        <h3>Growth</h3>
+        <p class="price">AED 1,199<small> / month</small></p>
+        <p class="small">For businesses that sell on 30 to 90 day terms.</p>
+        <ul>
+          <li><span class="tick"></span>Up to 750 open invoices</li>
+          <li><span class="tick"></span>Phone calls in Arabic and English</li>
+          <li><span class="tick"></span>Dispute and promise tracking</li>
+          <li><span class="tick"></span>Custom schedules by customer group</li>
+        </ul>
+        <a class="btn btn-primary" href="#contact">Book a pilot</a>
+      </div>
+      <div class="plan">
+        <h3>Scale</h3>
+        <p class="price">Custom</p>
+        <p class="small">For groups with several companies or high volume.</p>
+        <ul>
+          <li><span class="tick"></span>Unlimited invoices and entities</li>
+          <li><span class="tick"></span>Audit log exports</li>
+          <li><span class="tick"></span>API access</li>
+          <li><span class="tick"></span>Priority support</li>
+        </ul>
+        <a class="btn btn-line" href="#contact">Talk to us</a>
+      </div>
+    </div>
+    <p class="small cite" style="text-align:center">Introductory pricing. Phone minutes and WhatsApp conversations are billed at cost above your plan's allowance.</p>
   </div>
 </section>
 
 <!-- PARTNERS -->
-<section id="partners">
+<section class="section" id="partners" style="padding-top:0">
   <div class="wrap">
-    <p class="eyebrow">Ways to work with us</p>
-    <h2>Three ways in: use it, refer it, or offer it.</h2>
-    <div class="cards three">
-      <div class="card">
-        <p class="tag">Businesses</p>
-        <h3>Use it directly</h3>
-        <p>A monthly subscription for UAE SMEs who want to get paid faster without hiring someone to chase.</p>
-      </div>
-      <div class="card">
-        <p class="tag">Accounting and bookkeeping firms</p>
-        <h3>Refer your clients</h3>
-        <p>Introduce clients who struggle with late payments. We handle the setup and support, and you earn a share of each subscription.</p>
-      </div>
-      <div class="card">
-        <p class="tag">E-invoicing providers</p>
-        <h3>Offer it to your customers</h3>
-        <p>Add collections to what you sell, alongside your product or under your name, on a revenue-share or wholesale basis.</p>
-      </div>
+    <div class="section-head">
+      <p class="kicker">Partners</p>
+      <h2>Three ways to work with us.</h2>
+    </div>
+    <div class="ways">
+      <div class="way"><p class="who">For businesses</p><h3>Use it directly</h3><p>A monthly subscription to get paid faster without hiring someone to chase.</p><a href="#contact">Book a pilot</a></div>
+      <div class="way"><p class="who">For accounting and bookkeeping firms</p><h3>Refer your clients</h3><p>Introduce clients who struggle with late payments. We handle setup and support, and you earn a share of each subscription.</p><a href="#contact">Become a referral partner</a></div>
+      <div class="way"><p class="who">For e-invoicing providers</p><h3>Offer it to your customers</h3><p>Add collections to what you already sell, alongside your product or under your name.</p><a href="#contact">Discuss a partnership</a></div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section id="faq" class="band">
-  <div class="wrap narrow-wrap">
-    <p class="eyebrow">FAQ</p>
-    <h2>Common questions</h2>
-    <details><summary>Will this annoy my customers?</summary><p>Reminders are polite, timed to the due date, and limited in frequency. Any reply pauses the chase, payment stops it, and you approve every template first.</p></details>
-    <details><summary>What happens if a customer disputes an invoice?</summary><p>The chase stops on that invoice and the case goes to your team with the customer's reason and the full message history.</p></details>
-    <details><summary>Is this a debt collection agency?</summary><p>No. InvoiceChaser is software you use to follow up on your own invoices, in your own name. Unresolved cases go to your own team.</p></details>
-    <details><summary>Which accounting software do you connect to?</summary><p>QuickBooks and spreadsheet uploads today, with more connections, including Zoho Books and e-invoice feeds, on the roadmap. Ask us about yours.</p></details>
-    <details><summary>Which languages and channels?</summary><p>WhatsApp, email, SMS and phone, in English and Arabic.</p></details>
-    <details><summary>What does it cost?</summary><p>Start with the free unpaid-invoice check and a short paid pilot. Monthly plans depend on the number of invoices you manage.</p></details>
+<section class="section" id="faq" style="padding-top:0">
+  <div class="wrap faq">
+    <div class="section-head" style="margin:0">
+      <p class="kicker">FAQ</p>
+      <h2>Questions business owners ask us.</h2>
+    </div>
+    <div>
+      <details><summary>Will this annoy my customers?</summary><p>Reminders are polite, timed to the due date and limited in number. Any reply pauses the chase, a payment stops it, and you approve every template before anything is sent.</p></details>
+      <details><summary>What happens when a customer disputes an invoice?</summary><p>Reminders stop on that invoice and it goes to your team with the customer's reason and the full message history.</p></details>
+      <details><summary>Is this a debt collection agency?</summary><p>No. InvoiceChaser is software you use to follow up on your own invoices, in your own company's name. Difficult cases go back to your own team.</p></details>
+      <details><summary>Which accounting software do you connect to?</summary><p>QuickBooks and spreadsheet uploads today. Zoho Books, Xero and e-invoice feeds are on the way. Ask us about yours.</p></details>
+      <details><summary>How long does setup take?</summary><p>Most pilots start within a week: connect your invoices, approve the templates, choose which invoices to include.</p></details>
+      <details><summary>Where is my data kept?</summary><p>Tell us your requirements during the pilot call. We agree how customer data is stored and handled before any real data is shared.</p></details>
+    </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact" class="band dark">
-  <div class="wrap contact-grid">
-    <div>
-      <p class="eyebrow">Next step</p>
-      <h2>Show us your overdue invoices.</h2>
-      <p class="lede">Send your aging report and we will show where cash is stuck and what we would chase first. No commitment.</p>
-    </div>
-    <div class="contact-box">
-      <p class="label">Email</p>
-      <p class="contact-val"><a href="mailto:sng19.work@gmail.com">sng19.work@gmail.com</a></p>
-      <p class="label">WhatsApp</p>
-      <p class="contact-val">[Add your number]</p>
-      <p class="fine">Please don't send customer data by email until we've agreed how it will be handled.</p>
+<!-- CTA -->
+<section class="section" id="contact" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta on-dark">
+      <div class="cta-copy">
+        <h2>Show us your overdue invoices.</h2>
+        <p class="lead">Send your aging report. Within 48 hours we'll show you where cash is stuck and what we would chase first. No commitment.</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="mailto:sng19.work@gmail.com?subject=Free%20invoice%20check">Email us</a><a class="btn btn-line" href="#demo">Replay the demo</a></div>
+      </div>
+      <div class="cta-box">
+        <label for="mail">Email</label>
+        <p class="val" id="mail">sng19.work@gmail.com</p>
+        <button class="copy" id="copy" type="button">Copy email</button>
+        <label>WhatsApp</label>
+        <p class="val">[Add your number]</p>
+        <p class="small" style="color:#A9C0BC">Please don't send customer data until we've agreed how it will be handled.</p>
+      </div>
     </div>
   </div>
 </section>
 
 </main>
 
-<footer class="footer">
-  <div class="wrap footer-inner">
-    <p><b>InvoiceChaser</b> · Collections for UAE businesses</p>
-    <p class="fine">Demo content uses fictional companies. Figures are cited where shown.</p>
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"></span>InvoiceChaser</a><p class="small" style="margin-top:14px;max-width:32ch">Collections for UAE businesses, on WhatsApp, email and phone.</p></div>
+      <div><h4>Product</h4><ul><li><a href="#product">Features</a></li><li><a href="#demo">Demo</a></li><li><a href="#integrations">Connections</a></li><li><a href="#pricing">Pricing</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#partners">Partners</a></li><li><a href="#trust">Security</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h4>Resources</h4><ul><li><a href="#einvoicing">UAE e-invoicing</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+    </div>
+    <div class="foot-base"><span>© 2026 InvoiceChaser</span><span>Demo content uses fictional companies.</span></div>
   </div>
 </footer>
 
 <script>
-// Mobile nav
-const toggle = document.querySelector('.nav-toggle');
-const links = document.getElementById('nav-links');
-toggle.addEventListener('click', () => {
-  const open = links.classList.toggle('open');
-  toggle.setAttribute('aria-expanded', String(open));
+// nav
+const nav=document.getElementById('nav'),menu=document.getElementById('menu'),burger=document.getElementById('burger');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>8),{passive:true});
+burger.addEventListener('click',()=>{const o=menu.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
+menu.addEventListener('click',e=>{if(e.target.tagName==='A'){menu.classList.remove('open');burger.setAttribute('aria-expanded',false)}});
+
+// copy email
+document.getElementById('copy').addEventListener('click',async e=>{
+  const t=document.getElementById('mail').textContent;
+  try{await navigator.clipboard.writeText(t);e.target.textContent='Copied'}
+  catch{const r=document.createRange();r.selectNodeContents(document.getElementById('mail'));getSelection().removeAllRanges();getSelection().addRange(r);e.target.textContent='Selected, press Ctrl+C'}
+  setTimeout(()=>e.target.textContent='Copy email',2000);
 });
-links.addEventListener('click', e => {
-  if (e.target.tagName === 'A') { links.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }
-});
 
-// Interactive demo (fictional data)
-const base = [
-  { when: 'Day −7', what: 'Email + WhatsApp', detail: 'Friendly heads-up with the invoice and a pay link.', state: 'Upcoming' },
-  { when: 'Due date', what: 'WhatsApp', detail: '"Invoice INV-2041 for AED 18,400 is due today."', state: 'Due' },
-  { when: 'Day +3', what: 'Email', detail: 'Polite notice asking if anything is blocking payment.', state: 'Overdue' },
-];
-const scenarios = {
-  pays: {
-    steps: [...base,
-      { when: 'Day +5', what: 'Payment received', detail: 'Payment syncs from the accounting system.', state: 'Paid', cls: 'paid' },
-      { when: 'Day +5', what: 'Chasing stopped', detail: 'No further reminders. A thank-you message is sent.', state: 'Paid', cls: 'paid' }],
-    note: 'Paid on day 5. The customer never got a phone call.'
-  },
-  promise: {
-    steps: [...base,
-      { when: 'Day +7', what: 'WhatsApp', detail: 'Amount and pay link, with an offer to speak.', state: 'Overdue' },
-      { when: 'Day +8', what: 'Customer replies', detail: '"We\'ll pay on the 20th." The reply reader records the date.', state: 'Promised' },
-      { when: 'Day +8', what: 'Reminders paused', detail: 'Nothing is sent until the day after the promised date.', state: 'Promised' },
-      { when: 'Day +12', what: 'Payment received', detail: 'Paid as promised. Chasing stopped.', state: 'Paid', cls: 'paid' }],
-    note: 'The promise was recorded and respected. No calls were needed.'
-  },
-  dispute: {
-    steps: [...base,
-      { when: 'Day +4', what: 'Customer replies', detail: '"This invoice is wrong, we received 40 units, not 50."', state: 'Disputed', cls: 'warn' },
-      { when: 'Day +4', what: 'Chasing stopped', detail: 'No more reminders on this invoice.', state: 'Disputed', cls: 'warn' },
-      { when: 'Day +4', what: 'Handed to your team', detail: 'Your finance contact gets the reason and the full history.', state: 'Disputed', cls: 'warn', hand: true }],
-    note: 'Disputes go to a person. The system never argues with your customer.'
-  },
-  silent: {
-    steps: [...base,
-      { when: 'Day +7', what: 'WhatsApp', detail: 'Amount and pay link, with an offer to speak.', state: 'Overdue' },
-      { when: 'Day +12', what: 'Phone call', detail: 'Assistant introduces itself, confirms the invoice was received.', state: 'Overdue' },
-      { when: 'Day +18', what: 'WhatsApp', detail: 'Follow-up referencing the call.', state: 'Overdue' },
-      { when: 'Day +25', what: 'Phone call', detail: 'Second call; asks for the finance contact.', state: 'Overdue' },
-      { when: 'Day +30', what: 'Handed to your team', detail: 'Full history of every message and call, ready for a personal follow-up.', state: 'Escalated', cls: 'warn', hand: true }],
-    note: 'After 30 days your own team takes over, with everything already documented.'
-  }
-};
-
-const tl = document.getElementById('timeline');
-const stateEl = document.getElementById('caseState');
-const noteEl = document.getElementById('caseNote');
-const chips = document.querySelectorAll('.chip');
-const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let timer = null;
-
-function run(name) {
-  clearInterval(timer);
-  chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.scenario === name)));
-  tl.innerHTML = '';
-  const s = scenarios[name];
-  let i = 0;
-  const add = () => {
-    const step = s.steps[i];
-    const li = document.createElement('li');
-    if (step.hand) li.className = 'hand';
-    li.innerHTML = `<span class="when">${step.when}</span><span class="what"><b>${step.what}</b>${step.detail}</span>`;
-    tl.appendChild(li);
-    stateEl.textContent = step.state;
-    stateEl.className = 'pill' + (step.cls ? ' ' + step.cls : '');
-    i++;
-    if (i >= s.steps.length) { clearInterval(timer); noteEl.textContent = s.note; }
-  };
-  noteEl.textContent = 'Running…';
-  if (reduce) { while (i < s.steps.length) add(); return; }
-  add();
-  timer = setInterval(add, 700);
-}
-chips.forEach(c => c.addEventListener('click', () => run(c.dataset.scenario)));
-run('promise');
+// demo (fictional)
+const start=[
+ {t:'−7 days',h:'Email and WhatsApp sent',d:'Friendly heads-up with the invoice and a pay link.',s:['Upcoming','st-due']},
+ {t:'Due',h:'WhatsApp sent',d:'"Invoice INV-2041 for AED 18,400 is due today."',s:['Due today','st-due']},
+ {t:'+3 days',h:'Email sent',d:'Polite notice asking if anything is blocking payment.',s:['Overdue','st-over']}];
+const S={
+ pays:{e:[...start,{t:'+5 days',h:'Payment received',d:'Synced from the accounting system.',s:['Paid','st-paid'],c:'stop'},{t:'+5 days',h:'Chasing stopped',d:'Thank-you message sent. No phone call was needed.',s:['Paid','st-paid'],c:'stop'}],n:'Paid on day 5 after three friendly reminders.'},
+ promise:{e:[...start,{t:'+7 days',h:'WhatsApp sent',d:'Amount, pay link and an offer to talk.',s:['Overdue','st-over']},{t:'+8 days',h:'Customer replied',d:'"We\'ll pay on the 20th." Date recorded on the invoice.',s:['Promised 20 Oct','st-prom']},{t:'+8 days',h:'Reminders paused',d:'Nothing more is sent until the day after the promise.',s:['Promised 20 Oct','st-prom']},{t:'+12 days',h:'Payment received',d:'Paid as promised. Chasing stopped.',s:['Paid','st-paid'],c:'stop'}],n:'The promise was recorded and respected.'},
+ dispute:{e:[...start,{t:'+4 days',h:'Customer replied',d:'"We only received 40 units, not 50."',s:['Disputed','st-disp']},{t:'+4 days',h:'Chasing stopped',d:'No more reminders on this invoice.',s:['Disputed','st-disp']},{t:'+4 days',h:'Sent to your team',d:'Your finance contact gets the reason and the full history.',s:['With your team','st-disp'],c:'hand'}],n:'Disputes always go to a person. The system never argues with your customer.'},
+ silent:{e:[...start,{t:'+7 days',h:'WhatsApp sent',d:'Amount, pay link and an offer to talk.',s:['Overdue','st-over']},{t:'+12 days',h:'Phone call',d:'Assistant introduces itself and confirms the invoice arrived. No answer; voicemail left.',s:['Overdue','st-over']},{t:'+18 days',h:'WhatsApp sent',d:'Follow-up mentioning the call.',s:['Overdue','st-over']},{t:'+25 days',h:'Phone call',d:'Second call; asks for the finance contact.',s:['Overdue','st-over']},{t:'+30 days',h:'Sent to your team',d:'Every message and call is attached, ready for a personal follow-up.',s:['With your team','st-disp'],c:'hand'}],n:'After 30 days your team takes over, with everything already documented.'}};
+const feed=document.getElementById('feed'),state=document.getElementById('state'),note=document.getElementById('note'),btns=document.querySelectorAll('.choice');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;let timer;
+function play(k){clearInterval(timer);btns.forEach(b=>b.setAttribute('aria-pressed',b.dataset.s===k));feed.innerHTML='';note.textContent='';
+ const sc=S[k];let i=0;const step=()=>{const e=sc.e[i++];const li=document.createElement('li');li.className='ev'+(e.c?' '+e.c:'');
+ li.innerHTML=`<span class="t">${e.t}</span><div><b>${e.h}</b><span>${e.d}</span></div>`;feed.appendChild(li);
+ state.textContent=e.s[0];state.className='st '+e.s[1];if(i>=sc.e.length){clearInterval(timer);note.textContent=sc.n}};
+ if(reduce){while(i<sc.e.length)step();return}step();timer=setInterval(step,650)}
+btns.forEach(b=>b.addEventListener('click',()=>play(b.dataset.s)));play('promise');
 </script>
 </body>
 </html>
