@@ -526,6 +526,7 @@ footer{padding-block:56px 40px}
 details.more{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:#FBFCFB}
 details.more summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--emerald-2)}
 .wiz-rail{width:auto}
+.wiz-body[data-s="2"] h3,.wiz-body[data-s="2"] .sub{display:none}
 </style>
 </head>
 <body>
@@ -1123,7 +1124,7 @@ function go(i){S.step=Math.max(0,Math.min(STEPS.length-1,i));clearT();
  $('#wizBack').disabled=S.step===0;$('#wizBack').style.opacity=S.step===0?.4:1;
  const nx=$('#wizNext');nx.textContent=S.step===STEPS.length-1?'Start over':'Next';
  const st=STEPS[S.step];
- body.className='wiz-body';body.innerHTML=`<h3>${st.t}</h3><p class="sub">${st.sub}</p><div id="wizMain"></div>`;
+ body.className='wiz-body';body.dataset.s=S.step;body.innerHTML=`<h3>${st.t}</h3><p class="sub">${st.sub}</p><div id="wizMain"></div>`;
  void body.offsetWidth;body.classList.add('go');body.scrollTop=0;
  st.r($('#wizMain'));
  if(S.auto)later(()=>{if(S.step<STEPS.length-1)go(S.step+1);else setAuto(false)},S.step===2?15000:S.step===0?6000:7000);
