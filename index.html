@@ -393,6 +393,38 @@ footer{padding-block:56px 40px}
 }
 @media (min-width:981px) and (max-height:800px){.ev{padding-block:4px}.demo-side .choice small{display:none}}
 @media (min-width:981px) and (max-height:680px){.ev span{display:none}.hero .lead,#integrations .section-head .lead{display:none}}
+/* branding */
+.brand{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,40px);align-items:start}
+.brand-ctl{display:flex;flex-direction:column;gap:clamp(8px,1.5vh,14px)}
+.seg{display:inline-flex;align-self:flex-start;background:#E6ECEB;border-radius:999px;padding:3px;gap:2px}
+.seg button{font:600 14px var(--body);border:0;background:transparent;color:var(--ink-2);padding:8px 16px;border-radius:999px;cursor:pointer}
+.seg button[aria-selected=true],.seg button[aria-pressed=true]{background:var(--white);color:var(--ink);box-shadow:0 1px 3px rgba(12,35,40,.18)}
+.bfields{display:grid;grid-template-columns:1.3fr .5fr 1.2fr;gap:12px}
+.bfields label,.btext{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.bfields input[type=text],.bfields input:not([type]),.btext textarea{font:400 15px var(--body);padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--white);color:var(--ink);width:100%}
+.bfields input[type=color]{width:100%;height:42px;padding:3px;border:1.5px solid var(--line);border-radius:10px;background:var(--white)}
+.bfile{position:relative}
+.bfile input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.bfile span{display:flex;align-items:center;height:42px;padding:0 12px;border:1.5px dashed var(--line);border-radius:10px;font-weight:500;font-size:13px;color:var(--muted);background:var(--white);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.btext textarea{resize:vertical;line-height:1.5;min-height:110px}
+.btext .link{float:right;background:none;border:0;color:var(--emerald);font:600 13px var(--body);cursor:pointer;text-decoration:underline}
+.btext{display:block}.btext textarea{margin-top:6px}
+.brand-ctl code{background:#E6ECEB;border-radius:5px;padding:1px 5px;font-size:12px}
+.pv{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow);overflow:hidden}
+.pv-top{display:flex;align-items:center;gap:10px;padding:12px 18px;color:#fff;background:var(--bc,#0B8A6B)}
+.pv-logo{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,.22);display:grid;place-items:center;overflow:hidden;font:800 14px var(--display)}
+.pv-logo img{width:100%;height:100%;object-fit:contain;background:#fff}
+.pv-sub{padding:10px 18px;border-bottom:1px solid var(--line);display:flex;gap:10px;font-size:14px;align-items:baseline}
+.pv-sub small{color:var(--muted)}
+.pv-body{padding:14px 18px;font-size:15px;line-height:1.55;white-space:pre-wrap;color:var(--ink-2)}
+.pv-btn{display:inline-block;margin:0 18px 18px;padding:10px 20px;border-radius:999px;background:var(--bc,#0B8A6B);color:#fff;font-weight:600;font-size:14px}
+.pv-sms,.pv-wa{padding:20px;background:#F0F4F3}
+.bubble{background:var(--white);border-radius:16px 16px 16px 4px;padding:12px 14px;font-size:15px;line-height:1.5;white-space:pre-wrap;max-width:86%;box-shadow:0 1px 2px rgba(12,35,40,.1)}
+.bubble.wa{background:#DCF8C6}
+.pv-sms .small{margin-top:10px}
+.brand-prev{display:flex;flex-direction:column;gap:10px}
+@media (max-width:900px){.brand{grid-template-columns:1fr}.bfields{grid-template-columns:1fr 1fr}.bfile{grid-column:1/-1}}
+@media (min-width:981px) and (max-height:800px){#brand .section-head .lead{display:none}.btext textarea{min-height:80px}.pv-body{padding-block:8px}}
 </style>
 </head>
 <body>
@@ -591,6 +623,51 @@ footer{padding-block:56px 40px}
           <div class="sort-row"><q>Please contact our accounts team instead</q><span class="st st-due">Contact updated</span></div>
           <div class="sort-row"><q>STOP</q><span class="st st-over">Opted out</span></div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDING -->
+<section class="section" id="brand">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Your voice, your brand</p>
+      <h2>Every message sounds like your company.</h2>
+      <p class="lead">Start from our tested defaults, then change the wording and tone, add your logo and colour, and choose how each channel looks.</p>
+    </div>
+    <div class="brand">
+      <div class="brand-ctl">
+        <div class="seg" role="tablist" aria-label="Channel">
+          <button role="tab" data-ch="email" aria-selected="true">Email</button>
+          <button role="tab" data-ch="sms" aria-selected="false">SMS</button>
+          <button role="tab" data-ch="wa" aria-selected="false">WhatsApp</button>
+        </div>
+        <div class="seg" role="group" aria-label="Tone">
+          <button data-tone="friendly" aria-pressed="true">Friendly</button>
+          <button data-tone="professional" aria-pressed="false">Professional</button>
+          <button data-tone="firm" aria-pressed="false">Firm</button>
+        </div>
+        <div class="bfields">
+          <label>Company name<input id="bName" value="Al Noor Trading" maxlength="40"></label>
+          <label>Brand colour<input id="bColor" type="color" value="#0B8A6B"></label>
+          <label class="bfile">Logo<input id="bLogo" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp"><span id="bLogoName">Upload PNG, JPG or SVG</span></label>
+        </div>
+        <label class="btext">Message template <button type="button" id="bReset" class="link">Reset to default</button>
+          <textarea id="bText" rows="6" spellcheck="false"></textarea>
+        </label>
+        <p class="small">Fields filled in automatically: <code>{customer}</code> <code>{invoice}</code> <code>{amount}</code> <code>{due}</code> <code>{company}</code> <code>{link}</code></p>
+      </div>
+      <div class="brand-prev" aria-live="polite">
+        <div class="pv pv-email" id="pvEmail">
+          <div class="pv-top" id="pvTop"><span class="pv-logo" id="pvLogo"></span><b id="pvCo">Al Noor Trading</b></div>
+          <div class="pv-sub"><small>Subject</small><b id="pvSubj"></b></div>
+          <div class="pv-body" id="pvBody"></div>
+          <span class="pv-btn" id="pvBtn">View and pay invoice</span>
+        </div>
+        <div class="pv pv-sms" id="pvSms" hidden><div class="bubble" id="pvSmsText"></div><p class="small" id="pvCount"></p></div>
+        <div class="pv pv-wa" id="pvWa" hidden><div class="bubble wa" id="pvWaText"></div></div>
+        <p class="small">Preview with sample data. Nothing is sent from this page.</p>
       </div>
     </div>
   </div>
@@ -918,6 +995,48 @@ btns.forEach(b=>b.addEventListener('click',()=>play(b.dataset.s)));play('promise
   tryPlay(0);
  });
  render();
+})();
+</script>
+<script>
+(function(){
+  const T={
+    email:{
+      friendly:{s:'A friendly reminder about invoice {invoice}',t:'Hi {customer},\n\nJust a quick reminder that invoice {invoice} for {amount} was due on {due}. You can pay it in one tap here: {link}\n\nIf it is already on its way, thank you! Reply to this email if anything is unclear.\n\nWarm regards,\n{company}'},
+      professional:{s:'Invoice {invoice}: payment due {due}',t:'Dear {customer},\n\nOur records show invoice {invoice} for {amount}, due on {due}, is still open. You can settle it here: {link}\n\nPlease let us know if you need a copy of the invoice or if there is a query we can resolve.\n\nKind regards,\n{company}'},
+      firm:{s:'Overdue: invoice {invoice} ({amount})',t:'Dear {customer},\n\nInvoice {invoice} for {amount} was due on {due} and remains unpaid. Please pay today using {link}, or reply with the date we can expect payment.\n\nRegards,\n{company}'}},
+    sms:{
+      friendly:{t:'Hi {customer}, a friendly reminder: invoice {invoice} ({amount}) was due {due}. Pay here: {link} Thanks! {company}'},
+      professional:{t:'{company}: invoice {invoice} for {amount}, due {due}, is open. Pay: {link}'},
+      firm:{t:'{company}: invoice {invoice} ({amount}) is overdue since {due}. Pay today: {link} or reply with a payment date.'}},
+    wa:{
+      friendly:{t:'Hi {customer}, hope you are well! A quick reminder that invoice {invoice} for {amount} was due on {due}. Here is a one-tap link to pay: {link}\nThank you! {company}'},
+      professional:{t:'Dear {customer}, invoice {invoice} for {amount}, due {due}, is still open. You can pay here: {link}\nKind regards, {company}'},
+      firm:{t:'Dear {customer}, invoice {invoice} for {amount} was due on {due} and is overdue. Please pay today: {link} or reply with the date of payment.\n{company}'}}
+  };
+  const $=id=>document.getElementById(id);
+  if(!$('bText'))return;
+  let ch='email',tone='friendly',edited=false,logo=null;
+  const data=()=>({customer:'Khalid',invoice:'INV-2033',amount:'AED 42,750',due:'12 Oct',company:$('bName').value.trim()||'Your company',link:'pay.invoicechaser.com/2033'});
+  const fill=s=>{const d=data();return s.replace(/\{(\w+)\}/g,(m,k)=>d[k]!==undefined?d[k]:m)};
+  function load(){const d=T[ch][tone];$('bText').value=d.t;edited=false;render()}
+  function render(){
+    const t=fill($('bText').value),c=$('bColor').value,co=data().company;
+    document.querySelector('#brand .brand-prev').style.setProperty('--bc',c);
+    $('pvEmail').hidden=ch!=='email';$('pvSms').hidden=ch!=='sms';$('pvWa').hidden=ch!=='wa';
+    $('pvCo').textContent=co;
+    const lg=$('pvLogo');lg.textContent='';
+    if(logo){const i=new Image();i.src=logo;i.alt='';lg.appendChild(i)}else lg.textContent=co.charAt(0).toUpperCase();
+    if(ch==='email'){$('pvSubj').textContent=fill(T.email[tone].s);$('pvBody').textContent=t}
+    if(ch==='sms'){$('pvSmsText').textContent=t;const n=t.length;$('pvCount').textContent=n+' characters · '+Math.ceil(n/160)+' SMS part'+(n>160?'s':'')}
+    if(ch==='wa')$('pvWaText').textContent=t;
+  }
+  document.querySelectorAll('[data-ch]').forEach(b=>b.onclick=()=>{ch=b.dataset.ch;document.querySelectorAll('[data-ch]').forEach(x=>x.setAttribute('aria-selected',x===b));load()});
+  document.querySelectorAll('[data-tone]').forEach(b=>b.onclick=()=>{tone=b.dataset.tone;document.querySelectorAll('[data-tone]').forEach(x=>x.setAttribute('aria-pressed',x===b));load()});
+  ['bName','bColor','bText'].forEach(id=>$(id).addEventListener('input',render));
+  $('bReset').onclick=load;
+  $('bLogo').onchange=e=>{const f=e.target.files[0];if(!f)return;if(f.size>2e6){$('bLogoName').textContent='Choose a file under 2 MB';return}
+    const r=new FileReader();r.onload=()=>{logo=r.result;$('bLogoName').textContent=f.name;render()};r.readAsDataURL(f)};
+  load();
 })();
 </script>
 </body>
