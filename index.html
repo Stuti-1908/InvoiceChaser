@@ -579,6 +579,42 @@ details.more summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--e
   .plans{gap:14px}
   .footer-grid,.foot-grid{gap:24px}
 }
+/* ---- mobile: shorter page ---- */
+@media (max-width:700px){
+  .sectors,#demo,.menu a[href="#demo"]{display:none!important}
+  .section{padding-block:34px!important}
+  .section-head{gap:10px;margin-bottom:18px}
+  .section-head .lead{display:none}
+  #how .wiz-head+.wiz{margin-top:0}
+  .hero-points li:nth-child(3){display:none}
+  .hero .float,.hero .rows .row:nth-child(n+4){display:none}
+  .hero .stage{padding-bottom:0}
+  .hero-copy{gap:16px}
+  .hero .lead{display:block;font-size:17px}
+  .problem-grid{grid-template-columns:repeat(3,1fr)}
+  .fig{padding:14px 10px;border-left:1px solid var(--line)}
+  .fig strong{font-size:30px}
+  .fig p{font-size:12.5px;line-height:1.35}
+  .loan{display:none}
+  .features{gap:30px}
+  .feature{gap:12px}
+  .feature-head{margin-bottom:0}
+  .feature-copy .lead{display:none}
+  .feature:not(.flip) .panel{display:none}
+  .feature-copy ul{gap:8px}
+  .hub{grid-template-columns:1fr 1fr;gap:10px}
+  .tile:has(.soon:not(.live)){display:none}
+  .tile p{display:none}
+  .gate{display:none}
+  #trust .section-head .lead,#einvoicing .section-head .lead{display:block;font-size:16px}
+  #einvoicing .tl{gap:12px}
+  .plans,.ways{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-inline:-18px;padding:4px 18px 14px;-webkit-overflow-scrolling:touch}
+  .plans>*,.ways>*{flex:0 0 84%;scroll-snap-align:center}
+  .plan .small{display:none}
+  footer{padding-block:32px 24px}
+  .foot-base{margin-top:20px}
+  .cta{padding:26px 20px}
+}
 </style>
 </head>
 <body>
@@ -626,7 +662,7 @@ details.more summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--e
       <p class="lead">InvoiceChaser follows up on every unpaid invoice for you, on WhatsApp, email and phone, in Arabic and English. It stops the moment your customer pays.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#contact">Get a free invoice check</a>
-        <a class="btn btn-line" href="#demo">Watch it work</a>
+        <a class="btn btn-line" href="#how">Watch it work</a>
       </div>
       <ul class="hero-points">
         <li><span class="tick"></span>You approve every message</li>
@@ -986,7 +1022,7 @@ details.more summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--e
       <div class="cta-copy">
         <h2>Show us your overdue invoices.</h2>
         <p class="lead">Send your aging report. Within 48 hours we'll show you where cash is stuck and what we would chase first. No commitment.</p>
-        <div class="hero-actions"><a class="btn btn-primary" href="mailto:sng19.work@gmail.com?subject=Free%20invoice%20check">Email us</a><a class="btn btn-line" href="#demo">Replay the demo</a></div>
+        <div class="hero-actions"><a class="btn btn-primary" href="mailto:sng19.work@gmail.com?subject=Free%20invoice%20check">Email us</a><a class="btn btn-line" href="#how">Replay the demo</a></div>
       </div>
       <div class="cta-box">
         <label for="mail">Email</label>
